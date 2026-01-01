@@ -6,142 +6,25 @@
     <title>9NIHIL</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400&family=Helvetica+Neue:wght@300&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background: black url('https://cdn.shopify.com/s/files/1/0831/0725/0472/files/Gothic_Romance_The_Allure_Of_Dark_Aesthetics_In_Modern_Wardrobes.webp?v=1744050263') center center / cover no-repeat fixed;
-            color: #ffffff;
-            font-family: 'Playfair Display', serif;
-            text-align: center;
-        }
-        .overlay {
-            background: rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-        .menu {
-            position: fixed;
-            top: 30px;
-            right: 40px;
-            z-index: 10;
-        }
-        .menu a {
-            display: block;
-            margin: 15px 0;
-            font-family: 'Helvetica Neue', sans-serif;
-            font-weight: 300;
-            font-size: 16px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #ffffff;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        .menu a:hover {
-            opacity: 1;
-            text-decoration: underline;
-        }
-        .brand-name {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Cinzel', serif;
-            font-size: 80px;
-            letter-spacing: 10px;
-            opacity: 0.9;
-            text-shadow: 2px 2px 10px black;
-            z-index: 5;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 20;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-        }
-        .modal-content {
-            background: #111;
-            padding: 50px 40px;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid #333;
-            position: relative;
-            text-align: left;
-        }
-        .modal-content h2 {
-            font-family: 'Cinzel', serif;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-            font-size: 28px;
-            text-align: center;
-        }
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            margin: 12px 0;
-            padding: 14px;
-            background: #000;
-            border: 1px solid #444;
-            color: #fff;
-            font-family: 'Helvetica Neue', sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .modal-content textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .modal-content button {
-            width: 100%;
-            padding: 16px;
-            margin-top: 20px;
-            background: #fff;
-            color: #000;
-            border: none;
-            font-weight: bold;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .modal-content button:hover {
-            background: #ccc;
-        }
-        .close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-        .close:hover {
-            opacity: 1;
-        }
-        .success-message {
-            display: none;
-            color: #ffffff;
-            font-size: 20px;
-            line-height: 1.6;
-            text-align: center;
-            margin-top: 40px;
-        }
-        .success-message strong {
-            font-family: 'Cinzel', serif;
-            font-size: 28px;
-            display: block;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-        }
-        #hidden_iframe {
-            display: none;
-        }
+        /* (Same styles as before — dark, minimalist, elegant) */
+        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; background: black url('https://cdn.shopify.com/s/files/1/0831/0725/0472/files/Gothic_Romance_The_Allure_Of_Dark_Aesthetics_In_Modern_Wardrobes.webp?v=1744050263') center center / cover no-repeat fixed; color: #ffffff; font-family: 'Playfair Display', serif; text-align: center; }
+        .overlay { background: rgba(0,0,0,0.5); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .menu { position: fixed; top: 30px; right: 40px; z-index: 10; }
+        .menu a { display: block; margin: 15px 0; font-family: 'Helvetica Neue', sans-serif; font-weight: 300; font-size: 16px; letter-spacing: 3px; text-transform: uppercase; color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .menu a:hover { opacity: 1; text-decoration: underline; }
+        .brand-name { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cinzel', serif; font-size: 80px; letter-spacing: 10px; opacity: 0.9; text-shadow: 2px 2px 10px black; z-index: 5; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20; justify-content: center; align-items: center; overflow-y: auto; }
+        .modal-content { background: #111; padding: 50px 40px; max-width: 500px; width: 90%; border: 1px solid #333; position: relative; text-align: left; }
+        .modal-content h2 { font-family: 'Cinzel', serif; letter-spacing: 4px; margin-bottom: 40px; font-size: 28px; text-align: center; }
+        .modal-content input, .modal-content textarea { width: 100%; margin: 12px 0; padding: 14px; background: #000; border: 1px solid #444; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; box-sizing: border-box; }
+        .modal-content textarea { min-height: 120px; resize: vertical; }
+        .modal-content button { width: 100%; padding: 16px; margin-top: 20px; background: #fff; color: #000; border: none; font-weight: bold; letter-spacing: 2px; cursor: pointer; transition: background 0.3s; }
+        .modal-content button:hover { background: #ccc; }
+        .close { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; opacity: 0.7; }
+        .close:hover { opacity: 1; }
+        .success-message { display: none; color: #ffffff; font-size: 20px; line-height: 1.6; text-align: center; margin-top: 40px; }
+        .success-message strong { font-family: 'Cinzel', serif; font-size: 28px; display: block; margin-bottom: 20px; letter-spacing: 3px; }
+        #hidden_iframe { display: none; }
     </style>
 </head>
 <body>
@@ -155,7 +38,7 @@
 
     <div class="brand-name">9NIHIL</div>
 
-    <!-- Hidden iframe for Google Form submission -->
+    <!-- Hidden iframe to handle Google Form submission without redirect -->
     <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
 
     <div id="waitlistModal" class="modal">
@@ -165,16 +48,16 @@
             <div id="formContainer">
                 <h2>WAITLIST INQUIRY</h2>
                 <form target="hidden_iframe" action="https://docs.google.com/forms/d/e/1FAIpQLSciOVQtAVMOwzGlZwhQ0lDzhUeS6GMBLqn5jGF9zULO91WJiA/formResponse" method="POST" id="waitlistForm">
-                    <!-- Replace these entry.XXXXXX with your exact field IDs from the form (see note below) -->
-                    <input type="email" name="emailAddress" placeholder="Email" required> <!-- Usually emailAddress for email -->
-                    <input type="text" name="entry.XXXXXX" placeholder="Name" required>
-                    <input type="text" name="entry.XXXXXX" placeholder="Instagram ID (e.g. @username)">
-                    <input type="text" name="entry.XXXXXX" placeholder="City / Location">
-                    <input type="text" name="entry.XXXXXX" placeholder="Availability (e.g. March–June 2026)">
-                    <textarea name="entry.XXXXXX" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
-                    <input type="text" name="entry.XXXXXX" placeholder="Budget" required>
+                    <!-- You MUST replace the entry.XXXXXX with your actual field IDs -->
+                    <input type="text" name="entry.1073741824" placeholder="Name" required> <!-- Example ID — replace all -->
+                    <input type="email" name="entry.123456789" placeholder="Email" required>
+                    <input type="text" name="entry.987654321" placeholder="Instagram ID (e.g. @username)">
+                    <input type="text" name="entry.112233445" placeholder="City / Location">
+                    <input type="text" name="entry.556677889" placeholder="Availability (e.g. March–June 2026)">
+                    <textarea name="entry.998877665" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
+                    <input type="text" name="entry.443322110" placeholder="Budget" required>
 
-                    <button type="submit" id="submitBtn">Submit</button>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
 
@@ -191,28 +74,26 @@
         const modal = document.getElementById("waitlistModal");
         const openBtn = document.getElementById("waitlistBtn");
         const closeBtn = document.getElementsByClassName("close")[0];
-        const form = document.getElementById("waitlistForm");
         const formContainer = document.getElementById("formContainer");
         const successMsg = document.getElementById("successMsg");
 
         openBtn.onclick = function() {
             formContainer.style.display = "block";
             successMsg.style.display = "none";
-            form.reset();
+            document.getElementById("waitlistForm").reset();
             modal.style.display = "flex";
         }
 
         closeBtn.onclick = () => modal.style.display = "none";
         window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
 
-        // Show custom thank-you after submission (hidden iframe loads = success)
-        form.onsubmit = function() {
+        // Show custom thank-you after successful submission
+        document.getElementById("waitlistForm").addEventListener("submit", function() {
             setTimeout(() => {
                 formContainer.style.display = "none";
                 successMsg.style.display = "block";
-            }, 500); // Small delay for submission to complete
-            return true;
-        }
+            }, 800); // Small delay to allow submission to complete
+        });
     </script>
 
 </body>
