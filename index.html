@@ -73,6 +73,7 @@
             max-width: 500px;
             width: 90%;
             border: 1px solid #333;
+            position: relative;
         }
         .modal-content h2 {
             font-family: 'Cinzel', serif;
@@ -121,6 +122,13 @@
         .close:hover {
             opacity: 1;
         }
+        .success-message {
+            display: none;
+            color: #0f0;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -147,8 +155,18 @@
                 <input type="text" name="availability" placeholder="Availability (e.g. March–June 2026)">
                 <textarea name="project" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
                 <input type="text" name="budget" placeholder="Budget" required>
+
+                <!-- Hidden field to help activate the form quickly -->
+                <input type="hidden" name="_subject" value="New Waitlist Inquiry - 9NIHIL">
+
+                <!-- Prevents spam bots -->
+                <input type="text" name="_gotcha" style="display:none">
+
                 <button type="submit">Submit</button>
             </form>
+            <div class="success-message" id="successMsg">
+                Thank you. Your inquiry has been received.<br>We will contact you soon.
+            </div>
         </div>
     </div>
 
@@ -156,10 +174,19 @@
         var modal = document.getElementById("waitlistModal");
         var btn = document.getElementById("waitlistBtn");
         var span = document.getElementsByClassName("close")[0];
+        var form = document.querySelector("form");
+        var successMsg = document.getElementById("successMsg");
 
         btn.onclick = function() { modal.style.display = "flex"; }
         span.onclick = function() { modal.style.display = "none"; }
         window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+
+        // Show success message after submission (Formspree redirects back with ?success)
+        if (window.location.search.includes('success')) {
+            modal.style.display = "flex";
+            form.style.display = "none";
+            successMsg.style.display = "block";
+        }
     </script>
 
 </body>
