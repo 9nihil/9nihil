@@ -74,6 +74,7 @@
             width: 90%;
             border: 1px solid #333;
             position: relative;
+            text-align: center;
         }
         .modal-content h2 {
             font-family: 'Cinzel', serif;
@@ -124,10 +125,17 @@
         }
         .success-message {
             display: none;
-            color: #0f0;
-            font-size: 18px;
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 1.6;
             margin-top: 20px;
-            text-align: center;
+        }
+        .success-message strong {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            display: block;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
         }
     </style>
 </head>
@@ -146,46 +154,62 @@
     <div id="waitlistModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>WAITLIST INQUIRY</h2>
-            <form action="https://formspree.io/f/mlgddzzy" method="POST">
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="text" name="instagram" placeholder="Instagram ID (e.g. @username)">
-                <input type="text" name="city" placeholder="City / Location">
-                <input type="text" name="availability" placeholder="Availability (e.g. March–June 2026)">
-                <textarea name="project" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
-                <input type="text" name="budget" placeholder="Budget" required>
 
-                <!-- Hidden field to help activate the form quickly -->
-                <input type="hidden" name="_subject" value="New Waitlist Inquiry - 9NIHIL">
+            <!-- Form (visible by default) -->
+            <div id="formContainer">
+                <h2>WAITLIST INQUIRY</h2>
+                <form action="https://formspree.io/f/mlgddzzy" method="POST">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="instagram" placeholder="Instagram ID (e.g. @username)">
+                    <input type="text" name="city" placeholder="City / Location">
+                    <input type="text" name="availability" placeholder="Availability (e.g. March–June 2026)">
+                    <textarea name="project" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
+                    <input type="text" name="budget" placeholder="Budget" required>
 
-                <!-- Prevents spam bots -->
-                <input type="text" name="_gotcha" style="display:none">
+                    <input type="hidden" name="_subject" value="New Waitlist Inquiry - 9NIHIL">
+                    <input type="text" name="_gotcha" style="display:none">
 
-                <button type="submit">Submit</button>
-            </form>
+                    <!-- This prevents redirect and enables AJAX-like success -->
+                    <input type="hidden" name="_next" value="?thanks=1">
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <!-- Success Message (shown after submit) -->
             <div class="success-message" id="successMsg">
-                Thank you. Your inquiry has been received.<br>We will contact you soon.
+                <strong>INQUIRY RECEIVED</strong>
+                Thank you for your interest in 9NIHIL.<br>
+                Your waitlist submission has been recorded.<br><br>
+                We will contact you when openings become available.
             </div>
         </div>
     </div>
 
     <script>
-        var modal = document.getElementById("waitlistModal");
-        var btn = document.getElementById("waitlistBtn");
-        var span = document.getElementsByClassName("close")[0];
-        var form = document.querySelector("form");
-        var successMsg = document.getElementById("successMsg");
+        const modal = document.getElementById("waitlistModal");
+        const btn = document.getElementById("waitlistBtn");
+        const span = document.getElementsByClassName("close")[0];
+        const formContainer = document.getElementById("formContainer");
+        const successMsg = document.getElementById("successMsg");
 
-        btn.onclick = function() { modal.style.display = "flex"; }
+        btn.onclick = function() { 
+            // Reset to form view when reopening
+            formContainer.style.display = "block";
+            successMsg.style.display = "none";
+            modal.style.display = "flex"; 
+        }
         span.onclick = function() { modal.style.display = "none"; }
         window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
 
-        // Show success message after submission (Formspree redirects back with ?success)
-        if (window.location.search.includes('success')) {
+        // Check if URL has ?thanks=1 (set by _next hidden field)
+        if (window.location.search.includes('thanks=1')) {
             modal.style.display = "flex";
-            form.style.display = "none";
+            formContainer.style.display = "none";
             successMsg.style.display = "block";
+            // Clean URL (optional, removes ?thanks=1)
+            history.replaceState(null, '', window.location.pathname);
         }
     </script>
 
