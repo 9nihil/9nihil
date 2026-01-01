@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>9NIHIL</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400&family=Helvetica+Neue:wght@300&display=swap" rel="stylesheet">
-    <!-- Favicon (simple black square with white text - optional, save as favicon.ico in repo) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22white%22>9</text></svg>">
     <style>
         * { cursor: none; } /* Hide default cursor */
@@ -45,6 +44,7 @@
             text-decoration: none;
             opacity: 0.7;
             transition: opacity 0.4s, text-shadow 0.4s;
+            cursor: pointer !important; /* Force hand cursor on links */
         }
         .menu a:hover {
             opacity: 1;
@@ -135,7 +135,7 @@
             top: 20px;
             right: 30px;
             font-size: 40px;
-            cursor: pointer;
+            cursor: pointer !important; /* Hand cursor on close */
             opacity: 0.6;
             transition: opacity 0.3s;
         }
@@ -181,7 +181,6 @@
 
     <div class="brand-name">9NIHIL</div>
 
-    <!-- Custom cursor -->
     <div class="custom-cursor"></div>
 
     <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
