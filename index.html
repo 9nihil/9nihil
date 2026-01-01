@@ -65,48 +65,82 @@
             justify-content: center;
             align-items: center;
             overflow-y: auto;
-            padding: 20px;
         }
         .modal-content {
             background: #111;
-            padding: 40px 20px 20px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 95vh;
-            overflow-y: auto;
+            padding: 50px 40px;
+            max-width: 500px;
+            width: 90%;
             border: 1px solid #333;
             position: relative;
-            text-align: center;
+            text-align: left;
         }
         .modal-content h2 {
             font-family: 'Cinzel', serif;
             letter-spacing: 4px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-size: 28px;
+            text-align: center;
+        }
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            margin: 12px 0;
+            padding: 14px;
+            background: #000;
+            border: 1px solid #444;
+            color: #fff;
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+        }
+        .modal-content textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .modal-content button:hover {
+            background: #ccc;
+        }
+        .modal-content button:disabled {
+            background: #666;
+            cursor: not-allowed;
         }
         .close {
             position: absolute;
-            top: 10px;
-            right: 20px;
+            top: 20px;
+            right: 30px;
             font-size: 40px;
             cursor: pointer;
             opacity: 0.7;
-            z-index: 30;
         }
         .close:hover {
             opacity: 1;
         }
-        /* Ultimate Seamless Dark Skin */
-        .dark-form-wrapper {
-            filter: invert(98%) hue-rotate(180deg) brightness(95%) saturate(80%);
-            background: #000;
-            padding: 20px 0;
+        .success-message {
+            display: none;
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 40px;
         }
-        .dark-form-wrapper iframe {
-            width: 100%;
-            height: 1800px; /* Extra tall for full visibility */
-            border: none;
-            background: transparent;
+        .success-message strong {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            display: block;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
         }
     </style>
 </head>
@@ -121,32 +155,84 @@
 
     <div class="brand-name">9NIHIL</div>
 
+    <!-- Custom Dark Waitlist Modal -->
     <div id="waitlistModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>WAITLIST INQUIRY</h2>
-            <div class="dark-form-wrapper">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSciOVQtAVMOwzGlZwhQ0lDzhUeS6GMBLqn5jGF9zULO91WJiA/viewform?embedded=true" allowfullscreen></iframe>
+
+            <div id="formContainer">
+                <h2>WAITLIST INQUIRY</h2>
+                <form id="waitlistForm">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="instagram" placeholder="Instagram ID (e.g. @username)">
+                    <input type="text" name="city" placeholder="City / Location">
+                    <input type="text" name="availability" placeholder="Availability (e.g. March–June 2026)">
+                    <textarea name="project" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
+                    <input type="text" name="budget" placeholder="Budget" required>
+
+                    <button type="submit" id="submitBtn">Submit</button>
+                </form>
+            </div>
+
+            <div class="success-message" id="successMsg">
+                <strong>INQUIRY RECEIVED</strong>
+                Thank you for your interest in 9NIHIL.<br>
+                Your waitlist submission has been recorded.<br><br>
+                We will contact you when openings become available.
             </div>
         </div>
     </div>
 
     <script>
         const modal = document.getElementById("waitlistModal");
-        const btn = document.getElementById("waitlistBtn");
-        const span = document.getElementsByClassName("close")[0];
+        const openBtn = document.getElementById("waitlistBtn");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const form = document.getElementById("waitlistForm");
+        const formContainer = document.getElementById("formContainer");
+        const successMsg = document.getElementById("successMsg");
+        const submitBtn = document.getElementById("submitBtn");
 
-        btn.onclick = function() {
+        openBtn.onclick = function() {
+            formContainer.style.display = "block";
+            successMsg.style.display = "none";
+            form.reset();
             modal.style.display = "flex";
         }
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+
+            const formData = new FormData(form);
+            formData.append("access_key", "YOUR-WEB3FORMS-ACCESS-KEY"); // Get this from web3forms.com
+
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    formContainer.style.display = "none";
+                    successMsg.style.display = "block";
+                } else {
+                    alert("Submission failed. Please email 9nihilcontact@gmail.com directly.");
+                }
+            } catch (err) {
+                alert("Error. Try again or email us.");
             }
-        }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit";
+        });
     </script>
 
 </body>
