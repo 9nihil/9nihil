@@ -113,7 +113,7 @@
             background: #ccc;
         }
         .modal-content button:disabled {
-            background: #555;
+            background: #666;
             cursor: not-allowed;
         }
         .close {
@@ -130,7 +130,6 @@
         .success-message,
         .error-message {
             display: none;
-            color: #ffffff;
             font-size: 20px;
             line-height: 1.6;
             margin-top: 20px;
@@ -164,10 +163,10 @@
         <div class="modal-content">
             <span class="close">&times;</span>
 
-            <!-- Form -->
+            <!-- Form Container -->
             <div id="formContainer">
                 <h2>WAITLIST INQUIRY</h2>
-                <form id="waitlistForm">
+                <form id="waitlistForm" action="https://formspree.io/f/mlgddzzy" method="POST">
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="text" name="name" placeholder="Name" required>
                     <input type="text" name="instagram" placeholder="Instagram ID (e.g. @username)">
@@ -175,6 +174,9 @@
                     <input type="text" name="availability" placeholder="Availability (e.g. March–June 2026)">
                     <textarea name="project" placeholder="Tattoo Project Idea / Size / Placement" required></textarea>
                     <input type="text" name="budget" placeholder="Budget" required>
+
+                    <!-- Anti-spam honeypot -->
+                    <input type="text" name="_gotcha" style="display:none">
 
                     <button type="submit" id="submitBtn">Submit</button>
                 </form>
@@ -190,24 +192,24 @@
 
             <!-- Error Message -->
             <div class="error-message" id="errorMsg">
-                <strong>OOPS</strong>
-                Something went wrong. Please try again later<br>or email us directly at 9nihilcontact@gmail.com
+                <strong>ERROR</strong>
+                Submission failed. Please try again or<br>email us directly at 9nihilcontact@gmail.com
             </div>
         </div>
     </div>
 
     <script>
         const modal = document.getElementById("waitlistModal");
-        const btn = document.getElementById("waitlistBtn");
-        const span = document.getElementsByClassName("close")[0];
+        const openBtn = document.getElementById("waitlistBtn");
+        const closeBtn = document.getElementsByClassName("close")[0];
         const form = document.getElementById("waitlistForm");
         const formContainer = document.getElementById("formContainer");
         const successMsg = document.getElementById("successMsg");
         const errorMsg = document.getElementById("errorMsg");
         const submitBtn = document.getElementById("submitBtn");
 
-        // Open modal (reset to form view)
-        btn.onclick = function() {
+        // Open modal and reset to form view
+        openBtn.onclick = function() {
             formContainer.style.display = "block";
             successMsg.style.display = "none";
             errorMsg.style.display = "none";
@@ -216,12 +218,12 @@
         }
 
         // Close modal
-        span.onclick = function() { modal.style.display = "none"; }
-        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
 
-        // AJAX form submission
-        form.addEventListener("submit", async function(e) {
-            e.preventDefault(); // Prevent normal redirect
+        // AJAX submission
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Stops any redirect
 
             submitBtn.disabled = true;
             submitBtn.textContent = "Submitting...";
@@ -229,20 +231,19 @@
             const formData = new FormData(form);
 
             try {
-                const response = await fetch("https://formspree.io/f/mlgddzzy", {
+                const response = await fetch(form.action, {
                     method: "POST",
                     body: formData,
                     headers: {
-                        'Accept': 'application/json'
+                        "Accept": "application/json"
                     }
                 });
 
                 if (response.ok) {
                     formContainer.style.display = "none";
                     successMsg.style.display = "block";
-                    // You still get the email + dashboard entry
                 } else {
-                    throw new Error("Submission failed");
+                    throw new Error("Server error");
                 }
             } catch (err) {
                 formContainer.style.display = "none";
