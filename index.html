@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Prevents zoom and fixes keyboard jumping issues on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>9NIHIL</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&family=Helvetica+Neue:wght@300&display=swap" rel="stylesheet">
@@ -64,15 +63,15 @@
             background: rgba(0,0,0,0.95);
             z-index: 20;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
             overflow-y: auto;
-            padding-top: 80px; /* Safe space so header isn't cut off */
-            padding-bottom: 40px;
+            padding-top: 100px; /* Extra space so title is fully visible */
+            padding-bottom: 60px;
             box-sizing: border-box;
         }
         .modal-content {
             background: #111;
-            padding: 40px 30px 50px;
+            padding: 40px 30px 60px;
             max-width: 500px;
             width: 90%;
             margin: 0 auto;
@@ -86,6 +85,7 @@
             letter-spacing: 6px;
             margin-bottom: 40px;
             font-size: clamp(26px, 7vw, 30px);
+            text-align: center;
         }
         .modal-content input,
         .modal-content textarea {
@@ -95,7 +95,7 @@
             background: #000;
             border: 1px solid #444;
             color: #fff;
-            font-size: 18px; /* Large for mobile typing */
+            font-size: 18px;
             box-sizing: border-box;
         }
         .modal-content textarea {
