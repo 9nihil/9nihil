@@ -195,27 +195,86 @@
         }
         .browser-warning {
             display: none;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            margin-bottom: 30px;
-            font-size: 15px;
-            line-height: 1.6;
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 30;
+            padding: 40px 30px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
         .browser-warning.active {
-            display: block;
+            display: flex;
+        }
+        .browser-warning-icon {
+            font-size: 60px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        .browser-warning h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            letter-spacing: 4px;
+            font-size: 24px;
+            margin: 0 0 20px;
         }
         .browser-warning p {
-            margin: 0 0 15px;
-        }
-        .browser-warning p:last-child {
-            margin: 0;
-        }
-        .browser-warning strong {
-            display: block;
-            margin-bottom: 10px;
+            margin: 0 0 30px;
             font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 400px;
+        }
+        .browser-warning-steps {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+        }
+        .browser-warning-steps p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .browser-warning-steps strong {
+            display: block;
+            margin-bottom: 15px;
+            text-align: center;
             letter-spacing: 2px;
+            font-size: 14px;
+        }
+        .open-browser-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: inherit;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .open-browser-btn:hover {
+            background: #ccc;
+        }
+        .dismiss-warning {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .dismiss-warning:hover {
+            color: rgba(255, 255, 255, 0.8);
         }
         .error-message {
             display: none;
@@ -269,9 +328,19 @@
         <div class="modal-content">
             <div id="formContainer">
                 <div class="browser-warning" id="browserWarning">
-                    <strong>⚠ BROWSER NOTICE</strong>
-                    <p>Instagram's browser may block form submissions.</p>
-                    <p>Tap the three dots (⋯) in the top right corner and select "Open in Safari" or "Open in Chrome" to submit your inquiry.</p>
+                    <div class="browser-warning-icon">⚠️</div>
+                    <h3>OPEN IN BROWSER</h3>
+                    <p>Instagram's browser blocks form submissions. Please open this page in Safari or Chrome to submit your inquiry.</p>
+                    
+                    <div class="browser-warning-steps">
+                        <strong>HOW TO OPEN:</strong>
+                        <p>1. Tap the three dots (⋯) at the top right</p>
+                        <p>2. Select "Open in Safari" or "Open in Browser"</p>
+                        <p>3. Fill out the waitlist form</p>
+                    </div>
+                    
+                    <button class="open-browser-btn" id="openInBrowserBtn">Copy Link & Open Browser</button>
+                    <div class="dismiss-warning" id="dismissWarning">Continue anyway (may not work)</div>
                 </div>
                 
                 <h2 id="modalTitle">WAITLIST INQUIRY</h2>
@@ -311,6 +380,8 @@
             const browserWarning = document.getElementById("browserWarning");
             const form = document.getElementById("waitlistForm");
             const iframe = document.getElementById("hidden_iframe");
+            const openInBrowserBtn = document.getElementById("openInBrowserBtn");
+            const dismissWarning = document.getElementById("dismissWarning");
 
             // Detect if user is in Instagram's in-app browser
             function isInstagramBrowser() {
@@ -325,6 +396,31 @@
                         ua.indexOf('FBAN') > -1 || 
                         ua.indexOf('FBAV') > -1);
             }
+
+            // Copy URL to clipboard and show instructions
+            openInBrowserBtn.addEventListener("click", function() {
+                const url = window.location.href;
+                
+                // Try to copy to clipboard
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(function() {
+                        openInBrowserBtn.textContent = "Link Copied! Now Open Safari/Chrome";
+                        setTimeout(() => {
+                            openInBrowserBtn.textContent = "Copy Link & Open Browser";
+                        }, 3000);
+                    }).catch(function() {
+                        alert("Please manually copy this URL and open it in Safari or Chrome:\n\n" + url);
+                    });
+                } else {
+                    // Fallback for browsers that don't support clipboard API
+                    alert("Please manually copy this URL and open it in Safari or Chrome:\n\n" + url);
+                }
+            });
+
+            // Allow user to dismiss warning and try anyway
+            dismissWarning.addEventListener("click", function() {
+                browserWarning.classList.remove("active");
+            });
 
             function openModal() {
                 formContainer.classList.remove("hidden");
