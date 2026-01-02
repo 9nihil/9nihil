@@ -193,6 +193,18 @@
             margin-bottom: 20px;
             letter-spacing: 4px;
         }
+        .error-message {
+            display: none;
+            color: #ff6b6b;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        .error-message.active {
+            display: block;
+        }
         .hidden {
             display: none !important;
         }
@@ -238,12 +250,15 @@
                     <input type="email" name="entry.707691437" placeholder="Email" required aria-label="Email">
                     <input type="text" name="entry.1194216741" placeholder="Instagram ID (@username)" aria-label="Instagram ID">
                     <input type="text" name="entry.106509041" placeholder="City / Location" aria-label="City or Location">
-                    <input type="date" name="entry.1582302048" placeholder="Preferred Start Date" aria-label="Preferred start date">
-                    <input type="date" name="entry.1421312211" placeholder="Preferred End Date" aria-label="Preferred end date">
+                    <input type="date" name="entry.1582302048" aria-label="Preferred start date">
+                    <input type="date" name="entry.1421312211" aria-label="Preferred end date">
                     <textarea name="entry.1559637135" placeholder="Tattoo Project Idea / Size / Placement (be precise)" required aria-label="Tattoo project details"></textarea>
                     <input type="text" name="entry.2114553682" placeholder="Budget" required aria-label="Budget">
                     <button type="submit">Submit</button>
                 </form>
+                <div class="error-message" id="errorMsg">
+                    There was an issue submitting your form. Please try again or contact us directly at contact@9nihil.com
+                </div>
             </div>
 
             <div class="success-message" id="successMsg">
@@ -262,11 +277,14 @@
             const closeBtn = document.querySelector(".close");
             const formContainer = document.getElementById("formContainer");
             const successMsg = document.getElementById("successMsg");
+            const errorMsg = document.getElementById("errorMsg");
             const form = document.getElementById("waitlistForm");
+            const iframe = document.getElementById("hidden_iframe");
 
             function openModal() {
                 formContainer.classList.remove("hidden");
                 successMsg.classList.remove("active");
+                errorMsg.classList.remove("active");
                 form.reset();
                 modal.classList.add("active");
                 modal.scrollTop = 0;
@@ -291,17 +309,32 @@
                 }
             });
 
+            // Listen for iframe load to detect successful submission
+            iframe.addEventListener("load", function() {
+                if (form.querySelector('button[type="submit"]').disabled) {
+                    formContainer.classList.add("hidden");
+                    successMsg.classList.add("active");
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit";
+                }
+            });
+
             form.addEventListener("submit", function(e) {
                 const submitBtn = form.querySelector('button[type="submit"]');
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Submitting...";
+                errorMsg.classList.remove("active");
 
+                // Fallback timeout in case iframe load doesn't fire
                 setTimeout(() => {
-                    formContainer.classList.add("hidden");
-                    successMsg.classList.add("active");
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Submit";
-                }, 1000);
+                    if (submitBtn.disabled) {
+                        formContainer.classList.add("hidden");
+                        successMsg.classList.add("active");
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Submit";
+                    }
+                }, 2000);
             });
         })();
     </script>
