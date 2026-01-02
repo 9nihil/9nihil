@@ -109,6 +109,9 @@
             border: 1px solid #333;
             position: relative;
         }
+        .modal-content.wide {
+            max-width: 700px;
+        }
         .modal-content h2 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
@@ -158,9 +161,9 @@
             cursor: not-allowed;
         }
         .close {
-            position: absolute;
-            top: 50px;
-            right: 50px;
+            position: fixed;
+            top: 30px;
+            right: 30px;
             font-size: 40px;
             cursor: pointer;
             opacity: 0.8;
@@ -205,6 +208,100 @@
         .error-message.active {
             display: block;
         }
+        .form-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .required {
+            color: #ff6b6b;
+        }
+        .form-section {
+            margin-bottom: 35px;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            letter-spacing: 3px;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            text-align: left;
+        }
+        select {
+            width: 100%;
+            margin: 18px 0;
+            padding: 20px;
+            background: #000;
+            border: 1px solid #444;
+            color: #fff;
+            font-size: 18px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        select:focus {
+            outline: none;
+            border-color: #666;
+        }
+        .radio-group {
+            margin-bottom: 25px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin: 0 12px 0 0;
+            cursor: pointer;
+        }
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            font-size: 14px;
+        }
+        .checkbox-group {
+            margin-bottom: 30px;
+        }
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .checkbox-option input[type="checkbox"] {
+            width: auto;
+            margin: 3px 12px 0 0;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .checkbox-option label {
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
         .hidden {
             display: none !important;
         }
@@ -220,8 +317,8 @@
                 padding: 30px 20px 40px;
             }
             .close {
-                top: 20px;
-                right: 20px;
+                top: 15px;
+                right: 15px;
                 font-size: 32px;
             }
         }
@@ -231,6 +328,7 @@
     <div class="overlay"></div>
 
     <nav class="menu" role="navigation" aria-label="Main menu">
+        <button id="bookingBtn" aria-label="Open booking form">Booking</button>
         <button id="waitlistBtn" aria-label="Open waitlist form">Waitlist</button>
         <a href="https://www.instagram.com/9nihil__/" target="_blank" rel="noopener noreferrer" aria-label="View gallery on Instagram">Gallery</a>
         <a href="mailto:contact@9nihil.com" aria-label="Contact us via email">Contact</a>
@@ -239,28 +337,55 @@
     <h1 class="brand-name">9NIHIL</h1>
 
     <div id="waitlistModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="close" aria-label="Close modal">&times;</button>
-        <div class="modal-content">
+        <button class="close" id="closeWaitlist" aria-label="Close modal">&times;</button>
+        <div class="modal-content wide">
             <div id="formContainer">
                 <h2 id="modalTitle">WAITLIST INQUIRY</h2>
+                <p class="form-subtitle">Join the waitlist by providing your information below. All fields marked with <span class="required">*</span> are required.</p>
+                
+                <div class="error-message" id="errorMsg">
+                    There was an issue submitting your form. Please try again or contact me at contact@9nihil.com
+                </div>
+                
                 <form action="https://api.web3forms.com/submit" method="POST" id="waitlistForm">
                     <input type="hidden" name="access_key" value="5a7634ff-7f19-4de1-abcf-3f6d5dd3dbfd">
                     <input type="hidden" name="subject" value="New 9NIHIL Waitlist Inquiry">
                     <input type="hidden" name="redirect" value="false">
                     
-                    <input type="text" name="name" placeholder="Name" required aria-label="Name">
-                    <input type="email" name="email" placeholder="Email" required aria-label="Email">
-                    <input type="text" name="instagram" placeholder="Instagram ID (@username)" aria-label="Instagram ID">
-                    <input type="text" name="location" placeholder="City / Location" aria-label="City or Location">
-                    <input type="date" name="preferred_start_date" aria-label="Preferred start date">
-                    <input type="date" name="preferred_end_date" aria-label="Preferred end date">
-                    <textarea name="project_details" placeholder="Tattoo Project Idea / Size / Placement (be precise)" required aria-label="Tattoo project details"></textarea>
-                    <input type="text" name="budget" placeholder="Budget" required aria-label="Budget">
-                    <button type="submit">Submit</button>
+                    <div class="form-section">
+                        <div class="section-title">Personal Information</div>
+                        
+                        <label for="waitlist-name">Name <span class="required">*</span></label>
+                        <input type="text" id="waitlist-name" name="name" required>
+                        
+                        <label for="waitlist-email">Email <span class="required">*</span></label>
+                        <input type="email" id="waitlist-email" name="email" required>
+                        
+                        <label for="waitlist-instagram">Instagram Handle</label>
+                        <input type="text" id="waitlist-instagram" name="instagram" placeholder="@username">
+                        
+                        <label for="waitlist-location">Country / City <span class="required">*</span></label>
+                        <input type="text" id="waitlist-location" name="location" required>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">Project Information</div>
+                        
+                        <label for="waitlist-dates-from">Availability From</label>
+                        <input type="date" id="waitlist-dates-from" name="preferred_start_date">
+                        
+                        <label for="waitlist-dates-to">Availability To</label>
+                        <input type="date" id="waitlist-dates-to" name="preferred_end_date">
+                        
+                        <label for="waitlist-project">Tattoo Project Idea / Size / Placement <span class="required">*</span></label>
+                        <textarea id="waitlist-project" name="project_details" placeholder="Be as precise as possible about your tattoo idea, size, and placement" required></textarea>
+                        
+                        <label for="waitlist-budget">Budget <span class="required">*</span></label>
+                        <input type="text" id="waitlist-budget" name="budget" placeholder="Your budget range" required>
+                    </div>
+                    
+                    <button type="submit">Submit Inquiry</button>
                 </form>
-                <div class="error-message" id="errorMsg">
-                    There was an issue submitting your form. Please try again or contact us directly at contact@9nihil.com
-                </div>
             </div>
 
             <div class="success-message" id="successMsg">
@@ -272,54 +397,210 @@
         </div>
     </div>
 
+    <div id="bookingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+        <button class="close" id="closeBooking" aria-label="Close modal">&times;</button>
+        <div class="modal-content wide">
+            <div id="bookingFormContainer">
+                <h2 id="bookingModalTitle">BOOKING REQUEST</h2>
+                <p class="form-subtitle">Please provide detailed information about your tattoo project. All fields marked with <span class="required">*</span> are required.</p>
+                
+                <div class="error-message" id="bookingErrorMsg">
+                    There was an issue submitting your booking. Please try again or contact me at contact@9nihil.com
+                </div>
+
+                <form action="https://api.web3forms.com/submit" method="POST" id="bookingForm">
+                    <input type="hidden" name="access_key" value="5a7634ff-7f19-4de1-abcf-3f6d5dd3dbfd">
+                    <input type="hidden" name="subject" value="New 9NIHIL Booking Request">
+                    <input type="hidden" name="redirect" value="false">
+
+                    <div class="form-section">
+                        <div class="section-title">Personal Information</div>
+                        
+                        <label for="booking-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="booking-name" name="name" required>
+                        
+                        <label for="booking-email">Email <span class="required">*</span></label>
+                        <input type="email" id="booking-email" name="email" required>
+                        
+                        <label for="booking-instagram">Instagram Handle</label>
+                        <input type="text" id="booking-instagram" name="instagram" placeholder="@username">
+                        
+                        <label for="booking-location">Country / City <span class="required">*</span></label>
+                        <input type="text" id="booking-location" name="location" required>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">Tattoo Details</div>
+                        
+                        <label for="placement">Body Placement <span class="required">*</span></label>
+                        <input type="text" id="placement" name="placement" placeholder="e.g., forearm, back, thigh" required>
+                        
+                        <label for="size">Approximate Size <span class="required">*</span></label>
+                        <select id="size" name="size" required>
+                            <option value="">Select size</option>
+                            <option value="small">Small (5-10 cm / 2-4 inches)</option>
+                            <option value="medium">Medium (10-15 cm / 4-6 inches)</option>
+                            <option value="large">Large (15-25 cm / 6-10 inches)</option>
+                            <option value="extra-large">Extra Large (25+ cm / 10+ inches)</option>
+                            <option value="full-sleeve">Full Arm Sleeve</option>
+                            <option value="half-sleeve">Half Arm Sleeve</option>
+                            <option value="full-leg-sleeve">Full Leg Sleeve</option>
+                            <option value="half-leg-sleeve">Half Leg Sleeve</option>
+                            <option value="back-piece">Back Piece</option>
+                        </select>
+                        
+                        <label for="description">Design Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" placeholder="Describe your tattoo idea in detail. Include any specific elements, themes, or symbolism you want incorporated." required></textarea>
+                        
+                        <label for="references">Reference Links</label>
+                        <textarea id="references" name="references" placeholder="Paste links to reference images, Pinterest boards, or Instagram posts that inspire your design (optional)"></textarea>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">Session Details</div>
+                        
+                        <label>Is this your first tattoo? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="first-yes" name="first_tattoo" value="yes" required>
+                                <label for="first-yes">Yes, this is my first tattoo</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="first-no" name="first_tattoo" value="no" required>
+                                <label for="first-no">No, I have tattoos</label>
+                            </div>
+                        </div>
+                        
+                        <label for="availability-from">Availability From <span class="required">*</span></label>
+                        <input type="date" id="availability-from" name="availability_from" required>
+                        
+                        <label for="availability-to">Availability To</label>
+                        <input type="date" id="availability-to" name="availability_to">
+                        
+                        <label for="budget">Budget Range <span class="required">*</span></label>
+                        <select id="budget" name="budget" required>
+                            <option value="">Select budget range</option>
+                            <option value="under-200">Under $200</option>
+                            <option value="200-500">$200 - $500</option>
+                            <option value="500-1000">$500 - $1,000</option>
+                            <option value="1000-2000">$1,000 - $2,000</option>
+                            <option value="2000+">$2,000+</option>
+                            <option value="open">Open to discussion</option>
+                        </select>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title">Additional Information</div>
+                        
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="deposit-agree" name="deposit_agree" required>
+                                <label for="deposit-agree">I understand that a non-refundable deposit will be required to secure my booking. <span class="required">*</span></label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="terms-agree" name="terms_agree" required>
+                                <label for="terms-agree">I agree to follow all aftercare instructions and studio policies. <span class="required">*</span></label>
+                            </div>
+                        </div>
+                        
+                        <label for="additional">Additional Notes or Questions</label>
+                        <textarea id="additional" name="additional" placeholder="Any allergies, concerns, or special requests?"></textarea>
+                    </div>
+
+                    <button type="submit">Submit Booking Request</button>
+                </form>
+            </div>
+
+            <div class="success-message" id="bookingSuccessMsg">
+                <strong>BOOKING RECEIVED</strong>
+                Thank you for your booking request.<br>
+                I will review your submission and contact you within 48 hours to discuss your project and confirm availability.<br><br>
+                Check your email for confirmation.
+            </div>
+        </div>
+    </div>
+
     <script>
         (function() {
-            const modal = document.getElementById("waitlistModal");
-            const btn = document.getElementById("waitlistBtn");
-            const closeBtn = document.querySelector(".close");
+            const waitlistModal = document.getElementById("waitlistModal");
+            const bookingModal = document.getElementById("bookingModal");
+            const waitlistBtn = document.getElementById("waitlistBtn");
+            const bookingBtn = document.getElementById("bookingBtn");
+            const closeWaitlist = document.getElementById("closeWaitlist");
+            const closeBooking = document.getElementById("closeBooking");
             const formContainer = document.getElementById("formContainer");
             const successMsg = document.getElementById("successMsg");
             const errorMsg = document.getElementById("errorMsg");
-            const form = document.getElementById("waitlistForm");
+            const waitlistForm = document.getElementById("waitlistForm");
+            const bookingFormContainer = document.getElementById("bookingFormContainer");
+            const bookingSuccessMsg = document.getElementById("bookingSuccessMsg");
+            const bookingErrorMsg = document.getElementById("bookingErrorMsg");
+            const bookingForm = document.getElementById("bookingForm");
 
-            function openModal() {
+            function openWaitlistModal() {
                 formContainer.classList.remove("hidden");
                 successMsg.classList.remove("active");
                 errorMsg.classList.remove("active");
-                form.reset();
-                modal.classList.add("active");
-                modal.scrollTop = 0;
+                waitlistForm.reset();
+                waitlistModal.classList.add("active");
+                waitlistModal.scrollTop = 0;
                 document.body.style.overflow = "hidden";
             }
 
-            function closeModal() {
-                modal.classList.remove("active");
+            function closeWaitlistModal() {
+                waitlistModal.classList.remove("active");
                 document.body.style.overflow = "";
             }
 
-            btn.addEventListener("click", openModal);
-            closeBtn.addEventListener("click", closeModal);
+            function openBookingModal() {
+                bookingFormContainer.classList.remove("hidden");
+                bookingSuccessMsg.classList.remove("active");
+                bookingErrorMsg.classList.remove("active");
+                bookingForm.reset();
+                bookingModal.classList.add("active");
+                bookingModal.scrollTop = 0;
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeBookingModal() {
+                bookingModal.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            waitlistBtn.addEventListener("click", openWaitlistModal);
+            bookingBtn.addEventListener("click", openBookingModal);
+            closeWaitlist.addEventListener("click", closeWaitlistModal);
+            closeBooking.addEventListener("click", closeBookingModal);
             
-            modal.addEventListener("click", function(e) {
-                if (e.target === modal) closeModal();
+            waitlistModal.addEventListener("click", function(e) {
+                if (e.target === waitlistModal) closeWaitlistModal();
+            });
+
+            bookingModal.addEventListener("click", function(e) {
+                if (e.target === bookingModal) closeBookingModal();
             });
 
             document.addEventListener("keydown", function(e) {
-                if (e.key === "Escape" && modal.classList.contains("active")) {
-                    closeModal();
+                if (e.key === "Escape") {
+                    if (waitlistModal.classList.contains("active")) {
+                        closeWaitlistModal();
+                    }
+                    if (bookingModal.classList.contains("active")) {
+                        closeBookingModal();
+                    }
                 }
             });
 
-            form.addEventListener("submit", async function(e) {
+            waitlistForm.addEventListener("submit", async function(e) {
                 e.preventDefault();
                 
-                const submitBtn = form.querySelector('button[type="submit"]');
+                const submitBtn = waitlistForm.querySelector('button[type="submit"]');
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Submitting...";
                 errorMsg.classList.remove("active");
 
                 try {
-                    const formData = new FormData(form);
+                    const formData = new FormData(waitlistForm);
                     const response = await fetch('https://api.web3forms.com/submit', {
                         method: 'POST',
                         body: formData
@@ -330,7 +611,7 @@
                     if (data.success) {
                         formContainer.classList.add("hidden");
                         successMsg.classList.add("active");
-                        form.reset();
+                        waitlistForm.reset();
                     } else {
                         throw new Error('Form submission failed');
                     }
@@ -340,6 +621,39 @@
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Submit";
+                }
+            });
+
+            bookingForm.addEventListener("submit", async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = bookingForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Submitting...";
+                bookingErrorMsg.classList.remove("active");
+
+                try {
+                    const formData = new FormData(bookingForm);
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        bookingFormContainer.classList.add("hidden");
+                        bookingSuccessMsg.classList.add("active");
+                        bookingForm.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    bookingErrorMsg.classList.add("active");
+                    console.error('Error:', error);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit Booking Request";
                 }
             });
         })();
