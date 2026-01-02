@@ -193,6 +193,30 @@
             margin-bottom: 20px;
             letter-spacing: 4px;
         }
+        .browser-warning {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .browser-warning.active {
+            display: block;
+        }
+        .browser-warning p {
+            margin: 0 0 15px;
+        }
+        .browser-warning p:last-child {
+            margin: 0;
+        }
+        .browser-warning strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
         .error-message {
             display: none;
             color: #ff6b6b;
@@ -244,6 +268,12 @@
         <button class="close" aria-label="Close modal">&times;</button>
         <div class="modal-content">
             <div id="formContainer">
+                <div class="browser-warning" id="browserWarning">
+                    <strong>⚠ BROWSER NOTICE</strong>
+                    <p>Instagram's browser may block form submissions.</p>
+                    <p>Tap the three dots (⋯) in the top right corner and select "Open in Safari" or "Open in Chrome" to submit your inquiry.</p>
+                </div>
+                
                 <h2 id="modalTitle">WAITLIST INQUIRY</h2>
                 <form target="hidden_iframe" action="https://docs.google.com/forms/d/e/1FAIpQLSciOVQtAVMOwzGlZwhQ0lDzhUeS6GMBLqn5jGF9zULO91WJiA/formResponse" method="POST" id="waitlistForm">
                     <input type="text" name="entry.1126723691" placeholder="Name" required aria-label="Name">
@@ -257,15 +287,15 @@
                     <button type="submit">Submit</button>
                 </form>
                 <div class="error-message" id="errorMsg">
-                    There was an issue submitting your form. Please try again or contact us directly at contact@9nihil.com
+                    Submission failed. Please open this page in Safari or Chrome, or contact us at contact@9nihil.com
                 </div>
             </div>
 
             <div class="success-message" id="successMsg">
                 <strong>INQUIRY RECEIVED</strong>
-                Thank you for your interest in 9NIHIL.<br>
-                Your waitlist submission has been recorded.<br><br>
-                We will contact you when openings become available.
+                Thank you for your interest in my work.<br>
+                Your submission has been sent.<br><br>
+                I will contact you when openings become available.
             </div>
         </div>
     </div>
@@ -278,13 +308,36 @@
             const formContainer = document.getElementById("formContainer");
             const successMsg = document.getElementById("successMsg");
             const errorMsg = document.getElementById("errorMsg");
+            const browserWarning = document.getElementById("browserWarning");
             const form = document.getElementById("waitlistForm");
             const iframe = document.getElementById("hidden_iframe");
+
+            // Detect if user is in Instagram's in-app browser
+            function isInstagramBrowser() {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                return (ua.indexOf('Instagram') > -1);
+            }
+
+            // Detect if user is in any in-app browser (Facebook, Instagram, etc.)
+            function isInAppBrowser() {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                return (ua.indexOf('Instagram') > -1 || 
+                        ua.indexOf('FBAN') > -1 || 
+                        ua.indexOf('FBAV') > -1);
+            }
 
             function openModal() {
                 formContainer.classList.remove("hidden");
                 successMsg.classList.remove("active");
                 errorMsg.classList.remove("active");
+                
+                // Show warning if in Instagram browser
+                if (isInAppBrowser()) {
+                    browserWarning.classList.add("active");
+                } else {
+                    browserWarning.classList.remove("active");
+                }
+                
                 form.reset();
                 modal.classList.add("active");
                 modal.scrollTop = 0;
@@ -309,14 +362,17 @@
                 }
             });
 
+            let submissionAttempted = false;
+
             // Listen for iframe load to detect successful submission
             iframe.addEventListener("load", function() {
-                if (form.querySelector('button[type="submit"]').disabled) {
+                if (submissionAttempted) {
                     formContainer.classList.add("hidden");
                     successMsg.classList.add("active");
                     const submitBtn = form.querySelector('button[type="submit"]');
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Submit";
+                    submissionAttempted = false;
                 }
             });
 
@@ -325,16 +381,26 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Submitting...";
                 errorMsg.classList.remove("active");
+                submissionAttempted = true;
 
-                // Fallback timeout in case iframe load doesn't fire
+                // Fallback timeout
                 setTimeout(() => {
-                    if (submitBtn.disabled) {
-                        formContainer.classList.add("hidden");
-                        successMsg.classList.add("active");
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = "Submit";
+                    if (submitBtn.disabled && submissionAttempted) {
+                        // Check if we're in an in-app browser
+                        if (isInAppBrowser()) {
+                            errorMsg.classList.add("active");
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "Submit";
+                            submissionAttempted = false;
+                        } else {
+                            formContainer.classList.add("hidden");
+                            successMsg.classList.add("active");
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = "Submit";
+                            submissionAttempted = false;
+                        }
                     }
-                }, 2000);
+                }, 3000);
             });
         })();
     </script>
