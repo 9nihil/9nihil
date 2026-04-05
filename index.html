@@ -95,7 +95,7 @@
     /* ── LOGO ── */
     .logo-text {
         position: fixed;
-        bottom: 46px;
+        bottom: 32px;
         left: 0;
         right: 0;
         text-align: center;
@@ -168,7 +168,7 @@
         font-weight: normal;
         letter-spacing: 6px;
         margin: 0 0 40px;
-        font-size: clamp(36px, 9vw, 52px);
+        font-size: clamp(44px, 9vw, 60px);
     }
 
     .modal-content input,
@@ -242,7 +242,7 @@
     .form-subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 30px; line-height: 1.6; text-align: center; }
     .required { color: #ff6b6b; }
     .form-section { margin-bottom: 35px; }
-    .section-title { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.9; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: left; }
+    .section-title { font-family: 'Courier New', Courier, monospace; font-weight: 700; letter-spacing: 3px; font-size: 11px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.9; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: left; }
     label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; text-align: left; }
     select { width: 100%; max-width: 100%; box-sizing: border-box; margin: 18px 0; padding: 20px; background: #000; border: 1px solid #444; color: #fff; font-size: 18px; font-family: inherit; cursor: pointer; }
     select:focus { outline: none; border-color: #666; }
@@ -309,10 +309,6 @@
                 </div>
                 <div class="form-section">
                     <div class="section-title">Project Information</div>
-                    <label for="waitlist-dates-from">Availability From</label>
-                    <input type="date" id="waitlist-dates-from" name="preferred_start_date">
-                    <label for="waitlist-dates-to">Availability To</label>
-                    <input type="date" id="waitlist-dates-to" name="preferred_end_date">
                     <label for="waitlist-project">Tattoo Project Idea / Size / Placement <span class="required">*</span></label>
                     <textarea id="waitlist-project" name="project_details" placeholder="Be as precise as possible about your tattoo idea, size, and placement" required></textarea>
                     <label for="waitlist-budget">Budget <span class="required">*</span></label>
@@ -385,10 +381,6 @@
                             <label for="first-no">No, I have tattoos</label>
                         </div>
                     </div>
-                    <label for="availability-from">Availability From</label>
-                    <input type="date" id="availability-from" name="availability_from">
-                    <label for="availability-to">Availability To</label>
-                    <input type="date" id="availability-to" name="availability_to">
                     <label for="budget">Budget Range <span class="required">*</span></label>
                     <select id="budget" name="budget" required>
                         <option value="">Select budget range</option>
@@ -400,7 +392,7 @@
                         <option value="open">Open to discussion</option>
                     </select>
                 </div>
-                <div class="form-section">
+                <div class="form-section" style="margin-bottom: 10px;">
                     <div class="section-title">Additional Information</div>
                     <div class="checkbox-group">
                         <div class="checkbox-option">
@@ -413,9 +405,9 @@
                         </div>
                     </div>
                     <label for="additional">Additional Notes or Questions</label>
-                    <textarea id="additional" name="additional" placeholder="Any allergies, concerns, or special requests?"></textarea>
+                    <textarea id="additional" name="additional" placeholder="Any allergies, concerns, or special requests?" style="margin-bottom: 0;"></textarea>
                 </div>
-                <button type="submit">Submit Booking Request</button>
+                <button type="submit" style="margin-top: 16px;">Submit Booking Request</button>
             </form>
         </div>
         <div class="success-message" id="bookingSuccessMsg">
