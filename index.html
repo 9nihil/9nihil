@@ -28,7 +28,7 @@
             font-style: normal;
         }
 
-
+```
     * { box-sizing: border-box; }
 
     body {
@@ -203,7 +203,8 @@
         letter-spacing: 3px;
         cursor: pointer;
         transition: background 0.3s;
-        font-family: inherit;
+        font-family: 'Courier New', Courier, monospace;
+        text-transform: uppercase;
     }
 
     .modal-content button:hover { background: #ccc; }
@@ -226,15 +227,22 @@
     }
     .close:hover { opacity: 1; }
 
-    .success-message { display: none; color: #fff; font-size: 21px; line-height: 1.8; margin-top: 40px; }
+    .success-message { display: none; color: #fff; line-height: 1.8; margin-top: 40px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px; }
     .success-message.active { display: block; }
     .success-message strong {
         font-family: 'AngelicWar', sans-serif;
         font-weight: normal;
-        font-size: 30px;
+        font-size: clamp(52px, 12vw, 80px);
         display: block;
         margin-bottom: 20px;
         letter-spacing: 4px;
+        line-height: 1;
+    }
+    .success-body {
+        font-size: 11px;
+        opacity: 0.7;
+        letter-spacing: 1px;
+        line-height: 2;
     }
 
     .error-message { display: none; color: #ff6b6b; font-size: 16px; margin-top: 20px; padding: 15px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); }
@@ -269,10 +277,13 @@
         .checkbox-option input[type="checkbox"], .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
         .checkbox-option label, .radio-option label { font-size: 12px; }
     }
-    </style>
+</style>
+
 
 </head>
 <body>
+
+
 <!-- Bottom center logo + copyright -->
 <div class="logo-text">9NIHIL</div>
 <div class="copyright">Copyright &copy; 2026 All Rights Reserved</div>
@@ -317,9 +328,9 @@
         </div>
         <div class="success-message" id="successMsg">
             <strong>Inquiry Received</strong>
-            Thank you for your interest in my work.<br>
-            Your submission has been sent.<br><br>
-            I will contact you when openings become available.
+            <span class="success-body">Thank you for your interest in my work.<br>
+            Your submission has been sent.<br>
+            I will contact you when openings become available.</span>
         </div>
     </div>
 </div>
@@ -410,9 +421,8 @@
         </div>
         <div class="success-message" id="bookingSuccessMsg">
             <strong>Booking Received</strong>
-            Thank you for your booking request.<br>
-            I will review your submission and contact you to confirm availability.<br><br>
-            Check your email for confirmation.
+            <span class="success-body">Thank you for your booking request.<br>
+            I will review your submission and contact you to confirm availability.</span>
         </div>
     </div>
 </div>
