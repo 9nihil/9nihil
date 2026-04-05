@@ -19,6 +19,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'AngelicWar';
+            src: url('AngelicWar.otf') format('opentype'),
+                 url('AngelicWar.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
         * {
             box-sizing: border-box;
         }
@@ -53,7 +60,7 @@
         .menu a {
             display: block;
             margin: 15px 0;
-            font-weight: 300;
+            font-weight: normal;
             font-size: 16px;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -65,7 +72,7 @@
             border: none;
             cursor: pointer;
             padding: 0;
-            font-family: inherit;
+            font-family: 'AngelicWar', sans-serif;
         }
         .menu button:hover,
         .menu a:hover {
@@ -326,7 +333,7 @@
     <button id="bookingBtn" aria-label="Open booking form">Booking</button>
     <button id="waitlistBtn" aria-label="Open waitlist form">Waitlist</button>
     <a href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer" aria-label="View gallery on Instagram">Gallery</a>
-    <a href="mailto:contact@9nihil.com" aria-label="Contact us via email">Contact</a>
+    <a href="/cdn-cgi/l/email-protection#bbd8d4d5cfdad8cffb82d5d2d3d2d795d8d4d6" aria-label="Contact us via email">Contact</a>
 </nav>
 
 <div id="waitlistModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -337,7 +344,7 @@
             <p class="form-subtitle">Join the waitlist by providing your information below. All fields marked with <span class="required">*</span> are required.</p>
             
             <div class="error-message" id="errorMsg">
-                There was an issue submitting your form. Please try again or contact me at contact@9nihil.com
+                There was an issue submitting your form. Please try again or contact me at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5a6aaabb1a4a6b185fcabacadaca9eba6aaa8">[email&#160;protected]</a>
             </div>
             
             <form action="https://api.web3forms.com/submit" method="POST" id="waitlistForm">
@@ -398,7 +405,7 @@
             <p class="form-subtitle">Please provide detailed information about your tattoo project. All fields marked with <span class="required">*</span> are required.</p>
             
             <div class="error-message" id="bookingErrorMsg">
-                There was an issue submitting your booking. Please try again or contact me at contact@9nihil.com
+                There was an issue submitting your booking. Please try again or contact me at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d9bab6b7adb8baad99e0b7b0b1b0b5f7bab6b4">[email&#160;protected]</a>
             </div>
 
             <form action="https://api.web3forms.com/submit" method="POST" id="bookingForm">
@@ -513,7 +520,7 @@
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     (function() {
         const waitlistModal = document.getElementById("waitlistModal");
         const bookingModal = document.getElementById("bookingModal");
@@ -640,18 +647,4 @@
                     bookingForm.reset();
                 } else {
                     throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                bookingErrorMsg.classList.add("active");
-                console.error('Error:', error);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Booking Request";
-            }
-        });
-    })();
-</script>
 ```
-
-</body>
-</html>
