@@ -17,463 +17,263 @@
     <meta name="twitter:image" content="https://9nihil.com/og-image.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'AngelicWar';
             src: url('AngelicWar.otf') format('opentype'),
                  url('AngelicWar.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
-
-```
-    :root {
-        --black: #050505;
-        --blood: #8b0000;
-        --red: #cc1111;
-        --off-white: #d9d4c7;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    body {
-        background-color: var(--black);
-        background-image: url('background1.JPG');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        color: var(--off-white);
-        font-family: 'Share Tech Mono', monospace;
-        cursor: crosshair;
-    }
-
-    /* Heavy vignette */
-    .vignette {
-        position: fixed;
-        inset: 0;
-        background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    /* Scan lines */
-    .scanlines {
-        position: fixed;
-        inset: 0;
-        background-image: repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 3px,
-            rgba(0,0,0,0.07) 3px,
-            rgba(0,0,0,0.07) 4px
-        );
-        pointer-events: none;
-        z-index: 2;
-    }
-
-    /* ── SCATTERED MENU ITEMS ── */
-    /* Each item is absolutely positioned individually */
-    .nav-item {
-        position: fixed;
-        z-index: 10;
-        font-family: 'AngelicWar', sans-serif;
-        color: var(--off-white);
-        background: none;
-        border: none;
-        text-decoration: none;
-        cursor: pointer;
-        line-height: 1;
-        padding: 0;
-        transition: color 0.15s, text-shadow 0.15s;
-        text-shadow:
-            0 0 30px rgba(0,0,0,1),
-            0 0 60px rgba(0,0,0,1),
-            3px 3px 0 rgba(80,0,0,0.5);
-    }
-
-    .nav-item:hover {
-        color: var(--red);
-        text-shadow:
-            0 0 30px rgba(0,0,0,1),
-            0 0 60px rgba(0,0,0,1),
-            3px 3px 0 rgba(139,0,0,0.8),
-            0 0 40px rgba(180,0,0,0.3);
-    }
-
-    /* BOOKING — top left, large, slight tilt */
-    .nav-booking {
-        top: 7vh;
-        left: 5vw;
-        font-size: clamp(52px, 9vw, 110px);
-        transform: rotate(-3deg);
-        letter-spacing: 2px;
-    }
-
-    /* WAITLIST — middle right, medium, opposite tilt */
-    .nav-waitlist {
-        top: 38vh;
-        right: 4vw;
-        font-size: clamp(40px, 6vw, 78px);
-        transform: rotate(2.5deg);
-        letter-spacing: 1px;
-        text-align: right;
-    }
-
-    /* GALLERY — bottom left, medium */
-    .nav-gallery {
-        bottom: 18vh;
-        left: 8vw;
-        font-size: clamp(36px, 5.5vw, 68px);
-        transform: rotate(-1.5deg);
-        letter-spacing: 3px;
-    }
-
-    /* CONTACT — bottom right, small, steep tilt */
-    .nav-contact {
-        bottom: 8vh;
-        right: 6vw;
-        font-size: clamp(30px, 4.5vw, 56px);
-        transform: rotate(4deg);
-        letter-spacing: 2px;
-    }
-
-    /* Small ambient text details */
-    .ambient {
-        position: fixed;
-        z-index: 5;
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 9px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: var(--off-white);
-        opacity: 0.18;
-        pointer-events: none;
-    }
-
-    .ambient-tl { top: 22px; left: 22px; }
-    .ambient-br { bottom: 22px; right: 22px; text-align: right; }
-    .ambient-mid {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-90deg);
-        white-space: nowrap;
-        font-size: 8px;
-        letter-spacing: 8px;
-        opacity: 0.08;
-    }
-
-    /* Thin horizontal scratch line */
-    .scratch {
-        position: fixed;
-        z-index: 5;
-        pointer-events: none;
-        background: rgba(139,0,0,0.35);
-    }
-    .scratch-h {
-        left: 0; right: 0;
-        height: 1px;
-        top: 50%;
-        opacity: 0.3;
-    }
-
-    /* ── MODAL ── */
-    .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(5,5,5,0.97);
-        z-index: 200;
-        overflow-y: auto;
-    }
-
-    .modal.active { display: block; }
-
-    .modal::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(to right, transparent, var(--blood), var(--red), var(--blood), transparent);
-        z-index: 201;
-    }
-
-    .modal-inner {
-        min-height: 100vh;
-        display: flex;
-        align-items: flex-start;
-        padding: 70px 60px 80px;
-    }
-
-    .modal-content {
-        width: 100%;
-        max-width: 620px;
-    }
-
-    .modal-content h2 {
-        font-family: 'AngelicWar', sans-serif;
-        font-size: clamp(52px, 11vw, 90px);
-        letter-spacing: 4px;
-        color: var(--off-white);
-        margin-bottom: 4px;
-        line-height: 1;
-        text-shadow: 3px 3px 0 var(--blood);
-    }
-
-    .form-subtitle {
-        font-size: 10px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        opacity: 0.3;
-        margin-bottom: 44px;
-        margin-top: 8px;
-    }
-
-    .section-title {
-        font-size: 9px;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-        color: var(--red);
-        opacity: 0.7;
-        margin-top: 40px;
-        margin-bottom: 16px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid #2a0a0a;
-    }
-
-    label {
-        display: block;
-        font-size: 9px;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        opacity: 0.4;
-        margin-bottom: 5px;
-        margin-top: 20px;
-    }
-
-    input, textarea, select {
-        width: 100%;
-        background: rgba(255,255,255,0.02);
-        border: none;
-        border-bottom: 1px solid #2a2a2a;
-        color: var(--off-white);
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 13px;
-        padding: 10px 0;
-        outline: none;
-        transition: border-color 0.2s, background 0.2s;
-        -webkit-appearance: none;
-        border-radius: 0;
-    }
-
-    input:focus, textarea:focus, select:focus {
-        border-bottom: 1px solid var(--blood);
-        background: rgba(139,0,0,0.04);
-    }
-
-    textarea { min-height: 70px; resize: none; }
-    select option { background: #0d0d0d; color: var(--off-white); }
-
-    .radio-group { margin-top: 10px; }
-    .radio-option { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .radio-option input[type="radio"] { width: auto; border: none; border-bottom: none; background: none; accent-color: var(--blood); }
-    .radio-option label { margin: 0; font-size: 11px; opacity: 0.5; text-transform: none; letter-spacing: 1px; }
-
-    .checkbox-group { margin-top: 10px; }
-    .checkbox-option { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-    .checkbox-option input[type="checkbox"] { width: auto; border: none; border-bottom: none; margin-top: 2px; flex-shrink: 0; accent-color: var(--blood); }
-    .checkbox-option label { margin: 0; font-size: 11px; opacity: 0.5; text-transform: none; letter-spacing: 1px; line-height: 1.6; }
-
-    .required { color: var(--red); }
-
-    .submit-btn {
-        margin-top: 48px;
-        background: transparent;
-        border: 1px solid var(--blood);
-        color: var(--off-white);
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 11px;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-        padding: 16px 36px;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-        width: auto;
-    }
-
-    .submit-btn::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: var(--blood);
-        transform: translateX(-100%);
-        transition: transform 0.25s;
-        z-index: -1;
-    }
-
-    .submit-btn:hover::before { transform: translateX(0); }
-    .submit-btn:hover { border-color: var(--red); color: #fff; }
-    .submit-btn:disabled { opacity: 0.2; cursor: not-allowed; }
-
-    .close {
-        position: fixed;
-        top: 28px;
-        right: 44px;
-        font-size: 10px;
-        letter-spacing: 5px;
-        text-transform: uppercase;
-        cursor: pointer;
-        opacity: 0.3;
-        background: none;
-        border: none;
-        color: var(--off-white);
-        font-family: 'Share Tech Mono', monospace;
-        z-index: 300;
-        transition: opacity 0.2s, color 0.2s;
-    }
-    .close:hover { opacity: 1; color: var(--red); }
-
-    .success-message { display: none; padding-top: 40px; }
-    .success-message.active { display: block; }
-    .success-message strong {
-        display: block;
-        font-family: 'AngelicWar', sans-serif;
-        font-size: 70px;
-        letter-spacing: 4px;
-        margin-bottom: 20px;
-        line-height: 1;
-        text-shadow: 3px 3px 0 var(--blood);
-    }
-    .success-message p {
-        font-size: 11px;
-        letter-spacing: 2px;
-        opacity: 0.4;
-        line-height: 2.2;
-        text-transform: uppercase;
-    }
-
-    .error-message {
-        display: none;
-        font-size: 10px;
-        letter-spacing: 3px;
-        color: var(--red);
-        margin-top: 14px;
-        text-transform: uppercase;
-    }
-    .error-message.active { display: block; }
-
-    .hidden { display: none !important; }
-    .__cf_email__ { display: none !important; }
-
-    /* Mobile: stack items more safely */
-    @media (max-width: 600px) {
-        .nav-booking { top: 6vh; left: 4vw; font-size: 13vw; }
-        .nav-waitlist { top: 35vh; right: 3vw; font-size: 10vw; }
-        .nav-gallery { bottom: 22vh; left: 6vw; font-size: 9vw; }
-        .nav-contact { bottom: 10vh; right: 5vw; font-size: 8vw; }
-        .modal-inner { padding: 70px 24px 60px; }
-        .ambient-mid { display: none; }
-    }
-</style>
-```
-
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            background-image: url('background1.JPG');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            text-align: center;
+        }
+        .menu {
+            position: fixed;
+            top: 25px;
+            right: 40px;
+            z-index: 100;
+            text-align: right;
+        }
+        .menu button,
+        .menu a {
+            display: block;
+            margin: 15px 0;
+            font-weight: normal;
+            font-size: 42px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-family: 'AngelicWar', sans-serif;
+            text-shadow: 0px 0px 20px rgba(0,0,0,1), 0px 0px 40px rgba(0,0,0,0.9);
+        }
+        .menu button:hover,
+        .menu a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 200;
+            overflow-y: auto;
+            padding: 80px 20px 60px;
+        }
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #111;
+            padding: 50px 30px 60px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #333;
+            position: relative;
+        }
+        .modal-content.wide { max-width: 700px; }
+        .modal-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            letter-spacing: 6px;
+            margin: 0 0 40px;
+            font-size: clamp(26px, 7vw, 30px);
+        }
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            margin: 18px 0;
+            padding: 20px;
+            background: #000;
+            border: 1px solid #444;
+            color: #fff;
+            font-size: 18px;
+            font-family: inherit;
+        }
+        .modal-content input:focus,
+        .modal-content textarea:focus { outline: none; border-color: #666; }
+        .modal-content textarea { min-height: 150px; resize: vertical; }
+        .modal-content button {
+            width: 100%;
+            padding: 22px;
+            margin-top: 40px;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: inherit;
+        }
+        .modal-content button:hover { background: #ccc; }
+        .modal-content button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .close {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: #fff;
+            line-height: 1;
+            font-weight: 300;
+            z-index: 300;
+        }
+        .close:hover { opacity: 1; }
+        .success-message { display: none; color: #fff; font-size: 21px; line-height: 1.8; margin-top: 40px; }
+        .success-message.active { display: block; }
+        .success-message strong {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            font-size: 30px;
+            display: block;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+        .error-message { display: none; color: #ff6b6b; font-size: 16px; margin-top: 20px; padding: 15px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); }
+        .error-message.active { display: block; }
+        .form-subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 30px; line-height: 1.6; text-align: center; }
+        .required { color: #ff6b6b; }
+        .form-section { margin-bottom: 35px; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.9; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: left; }
+        label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; text-align: left; }
+        select { width: 100%; margin: 18px 0; padding: 20px; background: #000; border: 1px solid #444; color: #fff; font-size: 18px; font-family: inherit; cursor: pointer; }
+        select:focus { outline: none; border-color: #666; }
+        select option { background: #111; }
+        .radio-group { margin-bottom: 25px; }
+        .radio-option { display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; text-align: left; }
+        .radio-option input[type="radio"] { width: auto; margin: 0 12px 0 0; cursor: pointer; }
+        .radio-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 14px; }
+        .checkbox-group { margin-bottom: 30px; }
+        .checkbox-option { display: flex; align-items: flex-start; margin-bottom: 12px; text-align: left; }
+        .checkbox-option input[type="checkbox"] { width: auto; margin: 3px 12px 0 0; cursor: pointer; flex-shrink: 0; }
+        .checkbox-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 13px; line-height: 1.5; opacity: 0.9; }
+        .hidden { display: none !important; }
+        .__cf_email__ { display: none !important; }
+        @media (max-width: 600px) {
+            .menu { top: 20px; right: 20px; }
+            .menu button, .menu a { font-size: 32px; }
+            .modal { padding: 80px 15px 40px; }
+            .modal-content { padding: 30px 20px 40px; }
+            .close { top: 15px; right: 15px; font-size: 32px; }
+            .checkbox-option input[type="checkbox"], .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
+            .checkbox-option label, .radio-option label { font-size: 12px; }
+        }
+    </style>
 </head>
 <body>
 
 ```
-<div class="vignette"></div>
-<div class="scanlines"></div>
-<div class="scratch scratch-h"></div>
-
-<span class="ambient ambient-tl">9NIHIL — Tattoo</span>
-<span class="ambient ambient-br">By appointment only<br>contact@9nihil.com</span>
-<span class="ambient ambient-mid">9 N I H I L</span>
-
-<!-- Scattered nav items -->
-<button class="nav-item nav-booking" id="bookingBtn">Booking</button>
-<button class="nav-item nav-waitlist" id="waitlistBtn">Waitlist</button>
-<a class="nav-item nav-gallery" href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
-<a class="nav-item nav-contact" href="#" id="contactLink">Contact</a>
+<nav class="menu" role="navigation" aria-label="Main menu">
+    <button id="bookingBtn">Booking</button>
+    <button id="waitlistBtn">Waitlist</button>
+    <a href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
+    <a href="#" id="contactLink">Contact</a>
+</nav>
 
 <!-- Waitlist Modal -->
 <div id="waitlistModal" class="modal">
-    <button class="close" id="closeWaitlist">✕ close</button>
-    <div class="modal-inner">
-        <div class="modal-content">
-            <div id="formContainer">
-                <h2>Waitlist</h2>
-                <p class="form-subtitle">* required fields</p>
-                <div class="error-message" id="errorMsg">Transmission failed — try again</div>
-                <form id="waitlistForm">
-                    <div class="section-title">// Personal</div>
+    <button class="close" id="closeWaitlist">&times;</button>
+    <div class="modal-content wide">
+        <div id="formContainer">
+            <h2>WAITLIST INQUIRY</h2>
+            <p class="form-subtitle">All fields marked with <span class="required">*</span> are required.</p>
+            <div class="error-message" id="errorMsg">There was an issue submitting your form. Please try again.</div>
+            <form id="waitlistForm">
+                <div class="form-section">
+                    <div class="section-title">Personal Information</div>
                     <label for="waitlist-name">Name <span class="required">*</span></label>
                     <input type="text" id="waitlist-name" name="name" required>
                     <label for="waitlist-email">Email <span class="required">*</span></label>
                     <input type="email" id="waitlist-email" name="email" required>
-                    <label for="waitlist-instagram">Instagram</label>
+                    <label for="waitlist-instagram">Instagram Handle</label>
                     <input type="text" id="waitlist-instagram" name="instagram" placeholder="@username">
                     <label for="waitlist-location">Country / City <span class="required">*</span></label>
                     <input type="text" id="waitlist-location" name="location" required>
-
-                    <div class="section-title">// Project</div>
-                    <label for="waitlist-dates-from">Available From</label>
+                </div>
+                <div class="form-section">
+                    <div class="section-title">Project Information</div>
+                    <label for="waitlist-dates-from">Availability From</label>
                     <input type="date" id="waitlist-dates-from" name="preferred_start_date">
-                    <label for="waitlist-dates-to">Available To</label>
+                    <label for="waitlist-dates-to">Availability To</label>
                     <input type="date" id="waitlist-dates-to" name="preferred_end_date">
-                    <label for="waitlist-project">Project / Size / Placement <span class="required">*</span></label>
-                    <textarea id="waitlist-project" name="project_details" placeholder="Describe your idea, size, and placement" required></textarea>
+                    <label for="waitlist-project">Tattoo Project Idea / Size / Placement <span class="required">*</span></label>
+                    <textarea id="waitlist-project" name="project_details" placeholder="Be as precise as possible about your tattoo idea, size, and placement" required></textarea>
                     <label for="waitlist-budget">Budget <span class="required">*</span></label>
-                    <input type="text" id="waitlist-budget" name="budget" placeholder="Your range" required>
-
-                    <button type="submit" class="submit-btn">Submit Inquiry</button>
-                </form>
-            </div>
-            <div class="success-message" id="successMsg">
-                <strong>Received</strong>
-                <p>Your transmission has been sent.<br>I will reach out when openings become available.</p>
-            </div>
+                    <input type="text" id="waitlist-budget" name="budget" placeholder="Your budget range" required>
+                </div>
+                <button type="submit">Submit Inquiry</button>
+            </form>
+        </div>
+        <div class="success-message" id="successMsg">
+            <strong>INQUIRY RECEIVED</strong>
+            Thank you for your interest in my work.<br>
+            Your submission has been sent.<br><br>
+            I will contact you when openings become available.
         </div>
     </div>
 </div>
 
 <!-- Booking Modal -->
 <div id="bookingModal" class="modal">
-    <button class="close" id="closeBooking">✕ close</button>
-    <div class="modal-inner">
-        <div class="modal-content">
-            <div id="bookingFormContainer">
-                <h2>Booking</h2>
-                <p class="form-subtitle">* required fields</p>
-                <div class="error-message" id="bookingErrorMsg">Transmission failed — try again</div>
-                <form id="bookingForm">
-                    <div class="section-title">// Personal</div>
+    <button class="close" id="closeBooking">&times;</button>
+    <div class="modal-content wide">
+        <div id="bookingFormContainer">
+            <h2>BOOKING REQUEST</h2>
+            <p class="form-subtitle">All fields marked with <span class="required">*</span> are required.</p>
+            <div class="error-message" id="bookingErrorMsg">There was an issue submitting your booking. Please try again.</div>
+            <form id="bookingForm">
+                <div class="form-section">
+                    <div class="section-title">Personal Information</div>
                     <label for="booking-name">Name <span class="required">*</span></label>
                     <input type="text" id="booking-name" name="name" required>
                     <label for="booking-email">Email <span class="required">*</span></label>
                     <input type="email" id="booking-email" name="email" required>
-                    <label for="booking-instagram">Instagram</label>
+                    <label for="booking-instagram">Instagram Handle</label>
                     <input type="text" id="booking-instagram" name="instagram" placeholder="@username">
                     <label for="booking-location">Country / City <span class="required">*</span></label>
                     <input type="text" id="booking-location" name="location" required>
-
-                    <div class="section-title">// Tattoo</div>
-                    <label for="placement">Placement <span class="required">*</span></label>
-                    <input type="text" id="placement" name="placement" placeholder="e.g. forearm, back, thigh" required>
-                    <label for="size">Size <span class="required">*</span></label>
+                </div>
+                <div class="form-section">
+                    <div class="section-title">Tattoo Details</div>
+                    <label for="placement">Body Placement <span class="required">*</span></label>
+                    <input type="text" id="placement" name="placement" placeholder="e.g., forearm, back, thigh" required>
+                    <label for="size">Approximate Size <span class="required">*</span></label>
                     <select id="size" name="size" required>
-                        <option value="">— select —</option>
-                        <option value="small">Small (5–10 cm)</option>
-                        <option value="medium">Medium (10–15 cm)</option>
-                        <option value="large">Large (15–25 cm)</option>
-                        <option value="extra-large">Extra Large (25+ cm)</option>
+                        <option value="">Select size</option>
+                        <option value="small">Small (5-10 cm / 2-4 inches)</option>
+                        <option value="medium">Medium (10-15 cm / 4-6 inches)</option>
+                        <option value="large">Large (15-25 cm / 6-10 inches)</option>
+                        <option value="extra-large">Extra Large (25+ cm / 10+ inches)</option>
                         <option value="full-sleeve">Full Arm Sleeve</option>
                         <option value="half-sleeve">Half Arm Sleeve</option>
                         <option value="full-leg-sleeve">Full Leg Sleeve</option>
@@ -481,58 +281,61 @@
                         <option value="back-piece">Back Piece</option>
                     </select>
                     <label for="description">Design Description <span class="required">*</span></label>
-                    <textarea id="description" name="description" placeholder="Describe your idea in detail" required></textarea>
+                    <textarea id="description" name="description" placeholder="Describe your tattoo idea in detail." required></textarea>
                     <label for="references">Reference Links</label>
-                    <textarea id="references" name="references" placeholder="Pinterest, Instagram, etc. (optional)"></textarea>
-
-                    <div class="section-title">// Session</div>
-                    <label>First tattoo? <span class="required">*</span></label>
+                    <textarea id="references" name="references" placeholder="Paste links to reference images (optional)"></textarea>
+                </div>
+                <div class="form-section">
+                    <div class="section-title">Session Details</div>
+                    <label>Is this your first tattoo? <span class="required">*</span></label>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="first-yes" name="first_tattoo" value="yes" required>
-                            <label for="first-yes">Yes, first tattoo</label>
+                            <label for="first-yes">Yes, this is my first tattoo</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="first-no" name="first_tattoo" value="no">
                             <label for="first-no">No, I have tattoos</label>
                         </div>
                     </div>
-                    <label for="availability-from">Available From</label>
+                    <label for="availability-from">Availability From</label>
                     <input type="date" id="availability-from" name="availability_from">
-                    <label for="availability-to">Available To</label>
+                    <label for="availability-to">Availability To</label>
                     <input type="date" id="availability-to" name="availability_to">
-                    <label for="budget">Budget <span class="required">*</span></label>
+                    <label for="budget">Budget Range <span class="required">*</span></label>
                     <select id="budget" name="budget" required>
-                        <option value="">— select —</option>
+                        <option value="">Select budget range</option>
                         <option value="under-200">Under $200</option>
-                        <option value="200-500">$200 – $500</option>
-                        <option value="500-1000">$500 – $1,000</option>
-                        <option value="1000-2000">$1,000 – $2,000</option>
+                        <option value="200-500">$200 - $500</option>
+                        <option value="500-1000">$500 - $1,000</option>
+                        <option value="1000-2000">$1,000 - $2,000</option>
                         <option value="2000+">$2,000+</option>
                         <option value="open">Open to discussion</option>
                     </select>
-
-                    <div class="section-title">// Agreement</div>
+                </div>
+                <div class="form-section">
+                    <div class="section-title">Additional Information</div>
                     <div class="checkbox-group">
                         <div class="checkbox-option">
                             <input type="checkbox" id="deposit-agree" name="deposit_agree" required>
-                            <label for="deposit-agree">I understand a non-refundable deposit is required to secure my booking <span class="required">*</span></label>
+                            <label for="deposit-agree">I understand that a non-refundable deposit will be required to secure my booking. <span class="required">*</span></label>
                         </div>
                         <div class="checkbox-option">
                             <input type="checkbox" id="terms-agree" name="terms_agree" required>
-                            <label for="terms-agree">I agree to follow aftercare instructions and studio policies <span class="required">*</span></label>
+                            <label for="terms-agree">I agree to follow all aftercare instructions and studio policies. <span class="required">*</span></label>
                         </div>
                     </div>
-                    <label for="additional">Notes / Questions</label>
-                    <textarea id="additional" name="additional" placeholder="Allergies, concerns, special requests"></textarea>
-
-                    <button type="submit" class="submit-btn">Submit Booking</button>
-                </form>
-            </div>
-            <div class="success-message" id="bookingSuccessMsg">
-                <strong>Received</strong>
-                <p>Your booking request has been sent.<br>I will contact you to confirm availability.</p>
-            </div>
+                    <label for="additional">Additional Notes or Questions</label>
+                    <textarea id="additional" name="additional" placeholder="Any allergies, concerns, or special requests?"></textarea>
+                </div>
+                <button type="submit">Submit Booking Request</button>
+            </form>
+        </div>
+        <div class="success-message" id="bookingSuccessMsg">
+            <strong>BOOKING RECEIVED</strong>
+            Thank you for your booking request.<br>
+            I will review your submission and contact you to confirm availability.<br><br>
+            Check your email for confirmation.
         </div>
     </div>
 </div>
@@ -613,9 +416,9 @@
 
         waitlistForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            var submitBtn = waitlistForm.querySelector('.submit-btn');
+            var submitBtn = waitlistForm.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.textContent = "Sending...";
+            submitBtn.textContent = "Submitting...";
             errorMsg.classList.remove("active");
             var formData = new FormData(waitlistForm);
             formData.append("access_key", "5a7634ff-7f19-4de1-abcf-3f6d5dd3dbfd");
@@ -638,9 +441,9 @@
 
         bookingForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            var submitBtn = bookingForm.querySelector('.submit-btn');
+            var submitBtn = bookingForm.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.textContent = "Sending...";
+            submitBtn.textContent = "Submitting...";
             bookingErrorMsg.classList.remove("active");
             var formData = new FormData(bookingForm);
             formData.append("access_key", "ca0b1b95-6701-4492-a32e-6e0aed23c31d");
@@ -657,7 +460,7 @@
                 .catch(function () { bookingErrorMsg.classList.add("active"); })
                 .finally(function () {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = "Submit Booking";
+                    submitBtn.textContent = "Submit Booking Request";
                 });
         });
 
