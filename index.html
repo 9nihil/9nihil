@@ -56,7 +56,7 @@
             display: block;
             margin: 15px 0;
             font-weight: normal;
-            font-size: 32px;
+            font-size: 50px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: #fff;
@@ -68,6 +68,7 @@
             cursor: pointer;
             padding: 0;
             font-family: 'AngelicWar', sans-serif;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
         }
         .menu button:hover,
         .menu a:hover {
@@ -292,6 +293,9 @@
         .hidden {
             display: none !important;
         }
+        .__cf_email__ {
+            display: none !important;
+        }
         @media (max-width: 600px) {
             .menu {
                 top: 20px;
@@ -327,7 +331,7 @@
     <button id="bookingBtn">Booking</button>
     <button id="waitlistBtn">Waitlist</button>
     <a href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
-    <a href="/cdn-cgi/l/email-protection#dbb8b4b5afbab8af9be2b5b2b3b2b7f5b8b4b6">Contact</a>
+    <a href="#" onclick="window.location='mai'+'lto:contact@9nihil.com'; return false;">Contact</a>
 </nav>
 
 <!-- Waitlist Modal -->
@@ -594,4 +598,4 @@
                     } else {
                         bookingErrorMsg.classList.add("active");
                     }
-
+```
