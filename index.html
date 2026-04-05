@@ -26,9 +26,7 @@
             font-weight: normal;
             font-style: normal;
         }
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
@@ -79,7 +77,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0,0,0,0.95);
             z-index: 200;
             overflow-y: auto;
             padding: 80px 20px 60px;
@@ -97,9 +95,7 @@
             border: 1px solid #333;
             position: relative;
         }
-        .modal-content.wide {
-            max-width: 700px;
-        }
+        .modal-content.wide { max-width: 700px; }
         .modal-content h2 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
@@ -141,13 +137,8 @@
             transition: background 0.3s;
             font-family: inherit;
         }
-        .modal-content button:hover {
-            background: #ccc;
-        }
-        .modal-content button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .modal-content button:hover { background: #ccc; }
+        .modal-content button:disabled { opacity: 0.5; cursor: not-allowed; }
         .close {
             position: fixed;
             top: 30px;
@@ -163,9 +154,7 @@
             font-weight: 300;
             z-index: 300;
         }
-        .close:hover {
-            opacity: 1;
-        }
+        .close:hover { opacity: 1; }
         .success-message {
             display: none;
             color: #fff;
@@ -173,9 +162,7 @@
             line-height: 1.8;
             margin-top: 40px;
         }
-        .success-message.active {
-            display: block;
-        }
+        .success-message.active { display: block; }
         .success-message strong {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
@@ -190,12 +177,10 @@
             font-size: 16px;
             margin-top: 20px;
             padding: 15px;
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
+            background: rgba(255,107,107,0.1);
+            border: 1px solid rgba(255,107,107,0.3);
         }
-        .error-message.active {
-            display: block;
-        }
+        .error-message.active { display: block; }
         .form-subtitle {
             font-size: 14px;
             opacity: 0.7;
@@ -203,12 +188,8 @@
             line-height: 1.6;
             text-align: center;
         }
-        .required {
-            color: #ff6b6b;
-        }
-        .form-section {
-            margin-bottom: 35px;
-        }
+        .required { color: #ff6b6b; }
+        .form-section { margin-bottom: 35px; }
         .section-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
@@ -240,15 +221,9 @@
             font-size: 18px;
             font-family: inherit;
             cursor: pointer;
-            transition: border-color 0.3s;
         }
-        select:focus {
-            outline: none;
-            border-color: #666;
-        }
-        .radio-group {
-            margin-bottom: 25px;
-        }
+        select:focus { outline: none; border-color: #666; }
+        .radio-group { margin-bottom: 25px; }
         .radio-option {
             display: flex;
             align-items: center;
@@ -267,9 +242,7 @@
             text-transform: none;
             font-size: 14px;
         }
-        .checkbox-group {
-            margin-bottom: 30px;
-        }
+        .checkbox-group { margin-bottom: 30px; }
         .checkbox-option {
             display: flex;
             align-items: flex-start;
@@ -290,37 +263,17 @@
             line-height: 1.5;
             opacity: 0.9;
         }
-        .hidden {
-            display: none !important;
-        }
-        .__cf_email__ {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
+        .__cf_email__ { display: none !important; }
         @media (max-width: 600px) {
-            .menu {
-                top: 20px;
-                right: 20px;
-            }
-            .modal {
-                padding: 80px 15px 40px;
-            }
-            .modal-content {
-                padding: 30px 20px 40px;
-            }
-            .close {
-                top: 15px;
-                right: 15px;
-                font-size: 32px;
-            }
+            .menu { top: 20px; right: 20px; }
+            .modal { padding: 80px 15px 40px; }
+            .modal-content { padding: 30px 20px 40px; }
+            .close { top: 15px; right: 15px; font-size: 32px; }
             .checkbox-option input[type="checkbox"],
-            .radio-option input[type="radio"] {
-                transform: scale(0.7);
-                margin-right: 8px;
-            }
+            .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
             .checkbox-option label,
-            .radio-option label {
-                font-size: 12px;
-            }
+            .radio-option label { font-size: 12px; }
         }
     </style>
 </head>
@@ -331,19 +284,17 @@
     <button id="bookingBtn">Booking</button>
     <button id="waitlistBtn">Waitlist</button>
     <a href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
-    <a href="#" onclick="window.location='mai'+'lto:contact@9nihil.com'; return false;">Contact</a>
+    <a href="#" id="contactLink">Contact</a>
 </nav>
 
 <!-- Waitlist Modal -->
-<div id="waitlistModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<div id="waitlistModal" class="modal">
     <button class="close" id="closeWaitlist">&times;</button>
     <div class="modal-content wide">
         <div id="formContainer">
-            <h2 id="modalTitle">WAITLIST INQUIRY</h2>
+            <h2>WAITLIST INQUIRY</h2>
             <p class="form-subtitle">Join the waitlist by providing your information below. All fields marked with <span class="required">*</span> are required.</p>
-            <div class="error-message" id="errorMsg">
-                There was an issue submitting your form. Please try again or contact me at contact@9nihil.com
-            </div>
+            <div class="error-message" id="errorMsg">There was an issue submitting your form. Please try again.</div>
             <form id="waitlistForm">
                 <div class="form-section">
                     <div class="section-title">Personal Information</div>
@@ -380,15 +331,13 @@
 </div>
 
 <!-- Booking Modal -->
-<div id="bookingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+<div id="bookingModal" class="modal">
     <button class="close" id="closeBooking">&times;</button>
     <div class="modal-content wide">
         <div id="bookingFormContainer">
-            <h2 id="bookingModalTitle">BOOKING REQUEST</h2>
+            <h2>BOOKING REQUEST</h2>
             <p class="form-subtitle">Please provide detailed information about your tattoo project. All fields marked with <span class="required">*</span> are required.</p>
-            <div class="error-message" id="bookingErrorMsg">
-                There was an issue submitting your booking. Please try again or contact me at contact@9nihil.com
-            </div>
+            <div class="error-message" id="bookingErrorMsg">There was an issue submitting your booking. Please try again.</div>
             <form id="bookingForm">
                 <div class="form-section">
                     <div class="section-title">Personal Information</div>
@@ -419,9 +368,9 @@
                         <option value="back-piece">Back Piece</option>
                     </select>
                     <label for="description">Design Description <span class="required">*</span></label>
-                    <textarea id="description" name="description" placeholder="Describe your tattoo idea in detail. Include any specific elements, themes, or symbolism you want incorporated." required></textarea>
+                    <textarea id="description" name="description" placeholder="Describe your tattoo idea in detail." required></textarea>
                     <label for="references">Reference Links</label>
-                    <textarea id="references" name="references" placeholder="Paste links to reference images, Pinterest boards, or Instagram posts that inspire your design (optional)"></textarea>
+                    <textarea id="references" name="references" placeholder="Paste links to reference images (optional)"></textarea>
                 </div>
                 <div class="form-section">
                     <div class="section-title">Session Details</div>
@@ -432,7 +381,7 @@
                             <label for="first-yes">Yes, this is my first tattoo</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="first-no" name="first_tattoo" value="no" required>
+                            <input type="radio" id="first-no" name="first_tattoo" value="no">
                             <label for="first-no">No, I have tattoos</label>
                         </div>
                     </div>
@@ -472,14 +421,14 @@
         <div class="success-message" id="bookingSuccessMsg">
             <strong>BOOKING RECEIVED</strong>
             Thank you for your booking request.<br>
-            I will review your submission and contact you to discuss your project and confirm availability.<br><br>
+            I will review your submission and contact you to confirm availability.<br><br>
             Check your email for confirmation.
         </div>
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    document.addEventListener("DOMContentLoaded", function () {
+<script data-cfasync="false">
+    window.addEventListener("load", function () {
 
         var waitlistModal = document.getElementById("waitlistModal");
         var bookingModal = document.getElementById("bookingModal");
@@ -495,6 +444,12 @@
         var bookingSuccessMsg = document.getElementById("bookingSuccessMsg");
         var bookingErrorMsg = document.getElementById("bookingErrorMsg");
         var bookingForm = document.getElementById("bookingForm");
+        var contactLink = document.getElementById("contactLink");
+
+        contactLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.location = "mai" + "lto:contact@9nihil.com";
+        });
 
         function openWaitlistModal() {
             formContainer.classList.remove("hidden");
@@ -552,11 +507,9 @@
             submitBtn.disabled = true;
             submitBtn.textContent = "Submitting...";
             errorMsg.classList.remove("active");
-
             var formData = new FormData(waitlistForm);
             formData.append("access_key", "5a7634ff-7f19-4de1-abcf-3f6d5dd3dbfd");
             formData.append("subject", "New 9NIHIL Waitlist Inquiry");
-
             fetch("https://api.web3forms.com/submit", { method: "POST", body: formData })
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
@@ -568,9 +521,7 @@
                         errorMsg.classList.add("active");
                     }
                 })
-                .catch(function () {
-                    errorMsg.classList.add("active");
-                })
+                .catch(function () { errorMsg.classList.add("active"); })
                 .finally(function () {
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Submit Inquiry";
@@ -583,11 +534,9 @@
             submitBtn.disabled = true;
             submitBtn.textContent = "Submitting...";
             bookingErrorMsg.classList.remove("active");
-
             var formData = new FormData(bookingForm);
             formData.append("access_key", "ca0b1b95-6701-4492-a32e-6e0aed23c31d");
             formData.append("subject", "New 9NIHIL Booking Request");
-
             fetch("https://api.web3forms.com/submit", { method: "POST", body: formData })
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
@@ -598,4 +547,17 @@
                     } else {
                         bookingErrorMsg.classList.add("active");
                     }
+                })
+                .catch(function () { bookingErrorMsg.classList.add("active"); })
+                .finally(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit Booking Request";
+                });
+        });
+
+    });
+</script>
 ```
+
+</body>
+</html>
