@@ -17,7 +17,7 @@
     <meta name="twitter:image" content="https://9nihil.com/og-image.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'AngelicWar';
@@ -31,10 +31,15 @@
         --blood: #8b0000;
         --red: #cc1111;
         --off-white: #d9d4c7;
-        --rust: #3a1a1a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
 
     body {
         background-color: var(--black);
@@ -45,132 +50,139 @@
         background-attachment: fixed;
         color: var(--off-white);
         font-family: 'Share Tech Mono', monospace;
-        height: 100vh;
-        overflow: hidden;
-        cursor: default;
+        cursor: crosshair;
     }
 
-    /* Dark vignette */
-    body::before {
-        content: '';
+    /* Heavy vignette */
+    .vignette {
         position: fixed;
         inset: 0;
-        background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.75) 100%);
+        background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
         pointer-events: none;
         z-index: 1;
     }
 
-    /* Grain + scan lines */
-    body::after {
-        content: '';
+    /* Scan lines */
+    .scanlines {
         position: fixed;
         inset: 0;
-        background-image:
-            repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,0,0,0.08) 2px,
-                rgba(0,0,0,0.08) 4px
-            );
+        background-image: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            rgba(0,0,0,0.07) 3px,
+            rgba(0,0,0,0.07) 4px
+        );
         pointer-events: none;
         z-index: 2;
     }
 
-    /* Nav — bottom left */
-    .menu {
+    /* ── SCATTERED MENU ITEMS ── */
+    /* Each item is absolutely positioned individually */
+    .nav-item {
         position: fixed;
-        bottom: 44px;
-        left: 44px;
-        z-index: 50;
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .menu button,
-    .menu a {
-        display: block;
+        z-index: 10;
         font-family: 'AngelicWar', sans-serif;
-        font-size: 48px;
         color: var(--off-white);
         background: none;
         border: none;
         text-decoration: none;
         cursor: pointer;
-        letter-spacing: 3px;
-        text-align: left;
-        padding: 2px 0;
-        line-height: 1.05;
-        position: relative;
-        transition: color 0.1s;
+        line-height: 1;
+        padding: 0;
+        transition: color 0.15s, text-shadow 0.15s;
         text-shadow:
-            0 0 20px rgba(0,0,0,1),
-            0 0 40px rgba(0,0,0,0.9),
-            2px 2px 0px rgba(139,0,0,0.3);
+            0 0 30px rgba(0,0,0,1),
+            0 0 60px rgba(0,0,0,1),
+            3px 3px 0 rgba(80,0,0,0.5);
     }
 
-    .menu button::before,
-    .menu a::before {
-        content: '';
-        position: absolute;
-        left: -16px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 6px;
-        height: 6px;
-        background: var(--blood);
-        opacity: 0;
-        transition: opacity 0.15s;
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    }
-
-    .menu button:hover,
-    .menu a:hover {
+    .nav-item:hover {
         color: var(--red);
+        text-shadow:
+            0 0 30px rgba(0,0,0,1),
+            0 0 60px rgba(0,0,0,1),
+            3px 3px 0 rgba(139,0,0,0.8),
+            0 0 40px rgba(180,0,0,0.3);
     }
 
-    .menu button:hover::before,
-    .menu a:hover::before {
-        opacity: 1;
+    /* BOOKING — top left, large, slight tilt */
+    .nav-booking {
+        top: 7vh;
+        left: 5vw;
+        font-size: clamp(52px, 9vw, 110px);
+        transform: rotate(-3deg);
+        letter-spacing: 2px;
     }
 
-    /* Corner details */
-    .corner-tl,
-    .corner-br {
+    /* WAITLIST — middle right, medium, opposite tilt */
+    .nav-waitlist {
+        top: 38vh;
+        right: 4vw;
+        font-size: clamp(40px, 6vw, 78px);
+        transform: rotate(2.5deg);
+        letter-spacing: 1px;
+        text-align: right;
+    }
+
+    /* GALLERY — bottom left, medium */
+    .nav-gallery {
+        bottom: 18vh;
+        left: 8vw;
+        font-size: clamp(36px, 5.5vw, 68px);
+        transform: rotate(-1.5deg);
+        letter-spacing: 3px;
+    }
+
+    /* CONTACT — bottom right, small, steep tilt */
+    .nav-contact {
+        bottom: 8vh;
+        right: 6vw;
+        font-size: clamp(30px, 4.5vw, 56px);
+        transform: rotate(4deg);
+        letter-spacing: 2px;
+    }
+
+    /* Small ambient text details */
+    .ambient {
         position: fixed;
-        z-index: 50;
+        z-index: 5;
         font-family: 'Share Tech Mono', monospace;
         font-size: 9px;
-        letter-spacing: 3px;
+        letter-spacing: 4px;
         text-transform: uppercase;
         color: var(--off-white);
-        opacity: 0.25;
+        opacity: 0.18;
+        pointer-events: none;
     }
 
-    .corner-tl {
-        top: 28px;
-        left: 44px;
+    .ambient-tl { top: 22px; left: 22px; }
+    .ambient-br { bottom: 22px; right: 22px; text-align: right; }
+    .ambient-mid {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-90deg);
+        white-space: nowrap;
+        font-size: 8px;
+        letter-spacing: 8px;
+        opacity: 0.08;
     }
 
-    .corner-br {
-        bottom: 28px;
-        right: 44px;
-    }
-
-    /* Red accent line */
-    .accent-line {
+    /* Thin horizontal scratch line */
+    .scratch {
         position: fixed;
-        left: 0;
-        top: 0;
-        width: 3px;
-        height: 100vh;
-        background: linear-gradient(to bottom, transparent, var(--blood) 40%, var(--blood) 60%, transparent);
-        z-index: 50;
-        opacity: 0.6;
+        z-index: 5;
+        pointer-events: none;
+        background: rgba(139,0,0,0.35);
+    }
+    .scratch-h {
+        left: 0; right: 0;
+        height: 1px;
+        top: 50%;
+        opacity: 0.3;
     }
 
-    /* ─── MODAL ─── */
+    /* ── MODAL ── */
     .modal {
         display: none;
         position: fixed;
@@ -182,13 +194,10 @@
 
     .modal.active { display: block; }
 
-    /* Red top border when modal open */
     .modal::before {
         content: '';
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         height: 2px;
         background: linear-gradient(to right, transparent, var(--blood), var(--red), var(--blood), transparent);
         z-index: 201;
@@ -234,7 +243,7 @@
         margin-top: 40px;
         margin-bottom: 16px;
         padding-bottom: 6px;
-        border-bottom: 1px solid var(--rust);
+        border-bottom: 1px solid #2a0a0a;
     }
 
     label {
@@ -249,7 +258,7 @@
 
     input, textarea, select {
         width: 100%;
-        background: rgba(255,255,255,0.03);
+        background: rgba(255,255,255,0.02);
         border: none;
         border-bottom: 1px solid #2a2a2a;
         color: var(--off-white);
@@ -268,54 +277,17 @@
     }
 
     textarea { min-height: 70px; resize: none; }
-
     select option { background: #0d0d0d; color: var(--off-white); }
 
     .radio-group { margin-top: 10px; }
-    .radio-option {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 8px;
-    }
-    .radio-option input[type="radio"] {
-        width: auto;
-        border: none;
-        border-bottom: none;
-        background: none;
-        accent-color: var(--blood);
-    }
-    .radio-option label {
-        margin: 0;
-        font-size: 11px;
-        opacity: 0.5;
-        text-transform: none;
-        letter-spacing: 1px;
-    }
+    .radio-option { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .radio-option input[type="radio"] { width: auto; border: none; border-bottom: none; background: none; accent-color: var(--blood); }
+    .radio-option label { margin: 0; font-size: 11px; opacity: 0.5; text-transform: none; letter-spacing: 1px; }
 
     .checkbox-group { margin-top: 10px; }
-    .checkbox-option {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-    .checkbox-option input[type="checkbox"] {
-        width: auto;
-        border: none;
-        border-bottom: none;
-        margin-top: 2px;
-        flex-shrink: 0;
-        accent-color: var(--blood);
-    }
-    .checkbox-option label {
-        margin: 0;
-        font-size: 11px;
-        opacity: 0.5;
-        text-transform: none;
-        letter-spacing: 1px;
-        line-height: 1.6;
-    }
+    .checkbox-option { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .checkbox-option input[type="checkbox"] { width: auto; border: none; border-bottom: none; margin-top: 2px; flex-shrink: 0; accent-color: var(--blood); }
+    .checkbox-option label { margin: 0; font-size: 11px; opacity: 0.5; text-transform: none; letter-spacing: 1px; line-height: 1.6; }
 
     .required { color: var(--red); }
 
@@ -333,6 +305,8 @@
         transition: all 0.2s;
         position: relative;
         overflow: hidden;
+        display: inline-block;
+        width: auto;
     }
 
     .submit-btn::before {
@@ -399,11 +373,14 @@
     .hidden { display: none !important; }
     .__cf_email__ { display: none !important; }
 
+    /* Mobile: stack items more safely */
     @media (max-width: 600px) {
-        .menu { bottom: 30px; left: 24px; }
-        .menu button, .menu a { font-size: 36px; }
+        .nav-booking { top: 6vh; left: 4vw; font-size: 13vw; }
+        .nav-waitlist { top: 35vh; right: 3vw; font-size: 10vw; }
+        .nav-gallery { bottom: 22vh; left: 6vw; font-size: 9vw; }
+        .nav-contact { bottom: 10vh; right: 5vw; font-size: 8vw; }
         .modal-inner { padding: 70px 24px 60px; }
-        .corner-tl, .corner-br { display: none; }
+        .ambient-mid { display: none; }
     }
 </style>
 ```
@@ -412,16 +389,19 @@
 <body>
 
 ```
-<div class="accent-line"></div>
-<span class="corner-tl">9NIHIL / EST. MMXXI</span>
-<span class="corner-br">Tattoo — By appointment only</span>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<div class="scratch scratch-h"></div>
 
-<nav class="menu" role="navigation" aria-label="Main menu">
-    <button id="bookingBtn">Booking</button>
-    <button id="waitlistBtn">Waitlist</button>
-    <a href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
-    <a href="#" id="contactLink">Contact</a>
-</nav>
+<span class="ambient ambient-tl">9NIHIL — Tattoo</span>
+<span class="ambient ambient-br">By appointment only<br>contact@9nihil.com</span>
+<span class="ambient ambient-mid">9 N I H I L</span>
+
+<!-- Scattered nav items -->
+<button class="nav-item nav-booking" id="bookingBtn">Booking</button>
+<button class="nav-item nav-waitlist" id="waitlistBtn">Waitlist</button>
+<a class="nav-item nav-gallery" href="https://www.instagram.com/9nihil_/" target="_blank" rel="noopener noreferrer">Gallery</a>
+<a class="nav-item nav-contact" href="#" id="contactLink">Contact</a>
 
 <!-- Waitlist Modal -->
 <div id="waitlistModal" class="modal">
