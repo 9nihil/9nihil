@@ -27,232 +27,263 @@
             font-weight: normal;
             font-style: normal;
         }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            background-image: url('background1.JPG');
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            text-align: center;
-        }
-        .menu {
-            position: fixed;
-            top: 25px;
-            right: 40px;
-            z-index: 100;
-            text-align: right;
-        }
-        .menu button,
-        .menu a {
-            display: block;
-            margin: 15px 0;
-            font-weight: normal;
-            font-size: 42px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #fff;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            font-family: 'AngelicWar', sans-serif;
-            text-shadow:
-                -1px -1px 0 #000,
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000,
-                -2px -2px 0 #000,
-                 2px -2px 0 #000,
-                -2px  2px 0 #000,
-                 2px  2px 0 #000,
-                0px 0px 20px rgba(0,0,0,1),
-                0px 0px 40px rgba(0,0,0,0.9);
-        }
-        .menu button:hover,
-        .menu a:hover {
-            opacity: 1;
-            text-decoration: underline;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 200;
-            overflow-y: auto;
-            padding: 80px 20px 60px;
-        }
-        .modal.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
-        .modal-content {
-            background: #111;
-            padding: 50px 30px 60px;
-            max-width: 500px;
-            width: 100%;
-            border: 1px solid #333;
-            position: relative;
-        }
-        .modal-content.wide { max-width: 700px; }
-        .modal-content h2 {
-            font-family: 'AngelicWar', sans-serif;
-            font-weight: normal;
-            letter-spacing: 6px;
-            margin: 0 0 40px;
-            font-size: clamp(26px, 7vw, 30px);
-        }
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            margin: 18px 0;
-            padding: 20px;
-            background: #000;
-            border: 1px solid #444;
-            color: #fff;
-            font-size: 18px;
-            font-family: inherit;
-        }
-        .modal-content input:focus,
-        .modal-content textarea:focus { outline: none; border-color: #666; }
-        .modal-content textarea { min-height: 150px; resize: vertical; }
-        .modal-content button {
-            width: 100%;
-            padding: 22px;
-            margin-top: 40px;
-            background: #fff;
-            color: #000;
-            border: none;
-            font-weight: bold;
-            font-size: 18px;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: inherit;
-        }
-        .modal-content button:hover { background: #ccc; }
-        .modal-content button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .close {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            font-size: 40px;
-            cursor: pointer;
-            opacity: 0.8;
-            padding: 10px;
-            background: none;
-            border: none;
-            color: #fff;
-            line-height: 1;
-            font-weight: 300;
-            z-index: 300;
-        }
-        .close:hover { opacity: 1; }
-        .success-message { display: none; color: #fff; font-size: 21px; line-height: 1.8; margin-top: 40px; }
-        .success-message.active { display: block; }
-        .success-message strong {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            font-size: 30px;
-            display: block;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-        }
-        .error-message { display: none; color: #ff6b6b; font-size: 16px; margin-top: 20px; padding: 15px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); }
-        .error-message.active { display: block; }
-        .form-subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 30px; line-height: 1.6; text-align: center; }
-        .required { color: #ff6b6b; }
-        .form-section { margin-bottom: 35px; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.9; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: left; }
-        label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; text-align: left; }
-        select { width: 100%; margin: 18px 0; padding: 20px; background: #000; border: 1px solid #444; color: #fff; font-size: 18px; font-family: inherit; cursor: pointer; }
-        select:focus { outline: none; border-color: #666; }
-        select option { background: #111; }
-        .radio-group { margin-bottom: 25px; }
-        .radio-option { display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; text-align: left; }
-        .radio-option input[type="radio"] { width: auto; margin: 0 12px 0 0; cursor: pointer; }
-        .radio-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 14px; }
-        .checkbox-group { margin-bottom: 30px; }
-        .checkbox-option { display: flex; align-items: flex-start; margin-bottom: 12px; text-align: left; }
-        .checkbox-option input[type="checkbox"] { width: auto; margin: 3px 12px 0 0; cursor: pointer; flex-shrink: 0; }
-        .checkbox-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 13px; line-height: 1.5; opacity: 0.9; }
-        .hidden { display: none !important; }
-        .__cf_email__ { display: none !important; }
-        @media (max-width: 600px) {
-            .menu { top: 20px; right: 20px; }
-            .menu button, .menu a { font-size: 32px; }
-            .modal { padding: 80px 15px 40px; }
-            .modal-content { padding: 30px 20px 40px; }
-            .close { top: 15px; right: 15px; font-size: 32px; }
-            .checkbox-option input[type="checkbox"], .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
-            .checkbox-option label, .radio-option label { font-size: 12px; }
-        .logo-text {
-            position: fixed;
-            bottom: 48px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 50;
-            font-family: 'AngelicWar', sans-serif;
-            font-size: 22px;
-            letter-spacing: 4px;
-            color: #fff;
-            white-space: nowrap;
-            pointer-events: none;
-            text-shadow:
-                -1px -1px 0 #000,
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000,
-                -2px -2px 0 #000,
-                 2px -2px 0 #000,
-                -2px  2px 0 #000,
-                 2px  2px 0 #000,
-                0px 0px 20px rgba(0,0,0,1),
-                0px 0px 40px rgba(0,0,0,0.9);
-        }
-        .copyright {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            transform: scaleY(0.75);
-            z-index: 50;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            color: #fff;
-            white-space: nowrap;
-            text-shadow:
-                -1px -1px 0 #000,
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000;
-            filter: skewX(-2deg);
-            pointer-events: none;
-        }
-    </style>
+
+```
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #1a1a1a;
+        background-image: url('background1.JPG');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #fff;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        text-align: center;
+    }
+
+    /* ── MENU ── */
+    .menu {
+        position: fixed;
+        top: 25px;
+        right: 40px;
+        z-index: 100;
+        text-align: right;
+    }
+
+    .menu button,
+    .menu a {
+        display: block;
+        margin: 15px 0;
+        font-weight: normal;
+        font-size: 42px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-family: 'AngelicWar', sans-serif;
+        text-shadow:
+            -1px -1px 0 #000,
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000,
+            -2px -2px 0 #000,
+             2px -2px 0 #000,
+            -2px  2px 0 #000,
+             2px  2px 0 #000,
+            0px 0px 20px rgba(0,0,0,1),
+            0px 0px 40px rgba(0,0,0,0.9);
+    }
+
+    .menu button:hover,
+    .menu a:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+
+    /* ── LOGO ── */
+    .logo-text {
+        position: fixed;
+        bottom: 46px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 50;
+        font-family: 'AngelicWar', sans-serif;
+        font-size: 22px;
+        letter-spacing: 4px;
+        color: #fff;
+        pointer-events: none;
+        text-shadow:
+            -1px -1px 0 #000,
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000,
+            -2px -2px 0 #000,
+             2px -2px 0 #000,
+            -2px  2px 0 #000,
+             2px  2px 0 #000,
+            0px 0px 20px rgba(0,0,0,1),
+            0px 0px 40px rgba(0,0,0,0.9);
+    }
+
+    /* ── COPYRIGHT ── */
+    .copyright {
+        position: fixed;
+        bottom: 16px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 50;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        color: #fff;
+        pointer-events: none;
+        transform: scaleY(0.75);
+        filter: skewX(-2deg);
+        text-shadow:
+            -1px -1px 0 #000,
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000;
+    }
+
+    /* ── MODAL ── */
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.95);
+        z-index: 200;
+        overflow-y: auto;
+        padding: 80px 20px 60px;
+    }
+
+    .modal.active {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: #111;
+        padding: 50px 30px 60px;
+        max-width: 500px;
+        width: 100%;
+        border: 1px solid #333;
+        position: relative;
+    }
+
+    .modal-content.wide { max-width: 700px; }
+
+    .modal-content h2 {
+        font-family: 'AngelicWar', sans-serif;
+        font-weight: normal;
+        letter-spacing: 6px;
+        margin: 0 0 40px;
+        font-size: clamp(26px, 7vw, 30px);
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+        width: 100%;
+        margin: 18px 0;
+        padding: 20px;
+        background: #000;
+        border: 1px solid #444;
+        color: #fff;
+        font-size: 18px;
+        font-family: inherit;
+    }
+
+    .modal-content input:focus,
+    .modal-content textarea:focus { outline: none; border-color: #666; }
+
+    .modal-content textarea { min-height: 150px; resize: vertical; }
+
+    .modal-content button {
+        width: 100%;
+        padding: 22px;
+        margin-top: 40px;
+        background: #fff;
+        color: #000;
+        border: none;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 3px;
+        cursor: pointer;
+        transition: background 0.3s;
+        font-family: inherit;
+    }
+
+    .modal-content button:hover { background: #ccc; }
+    .modal-content button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .close {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        font-size: 40px;
+        cursor: pointer;
+        opacity: 0.8;
+        padding: 10px;
+        background: none;
+        border: none;
+        color: #fff;
+        line-height: 1;
+        font-weight: 300;
+        z-index: 300;
+    }
+    .close:hover { opacity: 1; }
+
+    .success-message { display: none; color: #fff; font-size: 21px; line-height: 1.8; margin-top: 40px; }
+    .success-message.active { display: block; }
+    .success-message strong {
+        font-family: 'AngelicWar', sans-serif;
+        font-weight: normal;
+        font-size: 30px;
+        display: block;
+        margin-bottom: 20px;
+        letter-spacing: 4px;
+    }
+
+    .error-message { display: none; color: #ff6b6b; font-size: 16px; margin-top: 20px; padding: 15px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); }
+    .error-message.active { display: block; }
+
+    .form-subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 30px; line-height: 1.6; text-align: center; }
+    .required { color: #ff6b6b; }
+    .form-section { margin-bottom: 35px; }
+    .section-title { font-family: 'Montserrat', sans-serif; font-weight: 200; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; margin-bottom: 20px; opacity: 0.9; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: left; }
+    label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; text-align: left; }
+    select { width: 100%; margin: 18px 0; padding: 20px; background: #000; border: 1px solid #444; color: #fff; font-size: 18px; font-family: inherit; cursor: pointer; }
+    select:focus { outline: none; border-color: #666; }
+    select option { background: #111; }
+    .radio-group { margin-bottom: 25px; }
+    .radio-option { display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; text-align: left; }
+    .radio-option input[type="radio"] { width: auto; margin: 0 12px 0 0; cursor: pointer; }
+    .radio-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 14px; }
+    .checkbox-group { margin-bottom: 30px; }
+    .checkbox-option { display: flex; align-items: flex-start; margin-bottom: 12px; text-align: left; }
+    .checkbox-option input[type="checkbox"] { width: auto; margin: 3px 12px 0 0; cursor: pointer; flex-shrink: 0; }
+    .checkbox-option label { margin: 0; cursor: pointer; text-transform: none; font-size: 13px; line-height: 1.5; opacity: 0.9; }
+
+    .hidden { display: none !important; }
+    .__cf_email__ { display: none !important; }
+
+    @media (max-width: 600px) {
+        .menu { top: 20px; right: 20px; }
+        .menu button, .menu a { font-size: 32px; }
+        .modal { padding: 80px 15px 40px; }
+        .modal-content { padding: 30px 20px 40px; }
+        .close { top: 15px; right: 15px; font-size: 32px; }
+        .checkbox-option input[type="checkbox"], .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
+        .checkbox-option label, .radio-option label { font-size: 12px; }
+    }
+</style>
+```
+
 </head>
 <body>
 
 ```
-<div class="copyright">Copyright &copy; 2026 All Rights Reserved</div>
+<!-- Bottom center logo + copyright -->
 <div class="logo-text">9NIHIL</div>
+<div class="copyright">Copyright &copy; 2026 All Rights Reserved</div>
 
+<!-- Top right menu -->
 <nav class="menu" role="navigation" aria-label="Main menu">
     <button id="bookingBtn">Booking</button>
     <button id="waitlistBtn">Waitlist</button>
@@ -265,7 +296,7 @@
     <button class="close" id="closeWaitlist">&times;</button>
     <div class="modal-content wide">
         <div id="formContainer">
-            <h2>WAITLIST INQUIRY</h2>
+            <h2>Waitlist Inquiry</h2>
             <p class="form-subtitle">All fields marked with <span class="required">*</span> are required.</p>
             <div class="error-message" id="errorMsg">There was an issue submitting your form. Please try again.</div>
             <form id="waitlistForm">
@@ -295,7 +326,7 @@
             </form>
         </div>
         <div class="success-message" id="successMsg">
-            <strong>INQUIRY RECEIVED</strong>
+            <strong>Inquiry Received</strong>
             Thank you for your interest in my work.<br>
             Your submission has been sent.<br><br>
             I will contact you when openings become available.
@@ -308,7 +339,7 @@
     <button class="close" id="closeBooking">&times;</button>
     <div class="modal-content wide">
         <div id="bookingFormContainer">
-            <h2>BOOKING REQUEST</h2>
+            <h2>Booking Request</h2>
             <p class="form-subtitle">All fields marked with <span class="required">*</span> are required.</p>
             <div class="error-message" id="bookingErrorMsg">There was an issue submitting your booking. Please try again.</div>
             <form id="bookingForm">
@@ -392,7 +423,7 @@
             </form>
         </div>
         <div class="success-message" id="bookingSuccessMsg">
-            <strong>BOOKING RECEIVED</strong>
+            <strong>Booking Received</strong>
             Thank you for your booking request.<br>
             I will review your submission and contact you to confirm availability.<br><br>
             Check your email for confirmation.
