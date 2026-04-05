@@ -17,7 +17,7 @@
     <meta name="twitter:image" content="https://9nihil.com/og-image.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'AngelicWar';
@@ -26,260 +26,345 @@
             font-weight: normal;
             font-style: normal;
         }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            background-image: url('background1.JPG');
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            text-align: center;
-        }
+
+```
+    :root {
+        --black: #080808;
+        --off-white: #e8e4dc;
+        --red: #c0392b;
+        --grey: #2a2a2a;
+        --light-grey: #555;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background-color: var(--black);
+        background-image: url('background1.JPG');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: var(--off-white);
+        font-family: 'Space Mono', monospace;
+        height: 100vh;
+        overflow: hidden;
+        cursor: crosshair;
+    }
+
+    /* Grain overlay */
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.4;
+    }
+
+    /* Nav — bottom left, vertical, unconventional */
+    .menu {
+        position: fixed;
+        bottom: 40px;
+        left: 40px;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .menu button,
+    .menu a {
+        display: block;
+        font-family: 'AngelicWar', sans-serif;
+        font-size: 42px;
+        color: var(--off-white);
+        background: none;
+        border: none;
+        text-decoration: none;
+        cursor: crosshair;
+        letter-spacing: 2px;
+        text-align: left;
+        padding: 0;
+        line-height: 1.1;
+        transition: color 0.15s, letter-spacing 0.2s;
+        text-shadow: 0px 0px 20px rgba(0,0,0,1), 0px 0px 40px rgba(0,0,0,0.9);
+    }
+
+    .menu button:hover,
+    .menu a:hover {
+        color: var(--red);
+        letter-spacing: 6px;
+    }
+
+    /* Small label top right */
+    .site-label {
+        position: fixed;
+        top: 30px;
+        right: 36px;
+        z-index: 50;
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--off-white);
+        opacity: 0.4;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+    }
+
+    /* Year bottom right */
+    .year-label {
+        position: fixed;
+        bottom: 40px;
+        right: 36px;
+        z-index: 50;
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        color: var(--off-white);
+        opacity: 0.3;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(8,8,8,0.97);
+        z-index: 200;
+        overflow-y: auto;
+    }
+
+    .modal.active { display: block; }
+
+    .modal-inner {
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 80px 60px 80px 60px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 640px;
+    }
+
+    .modal-content h2 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(48px, 10vw, 80px);
+        letter-spacing: 6px;
+        color: var(--off-white);
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+
+    .modal-content .form-subtitle {
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        opacity: 0.4;
+        margin-bottom: 48px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    .section-title {
+        font-size: 9px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        opacity: 0.35;
+        margin-bottom: 16px;
+        margin-top: 36px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #222;
+        font-family: 'Space Mono', monospace;
+    }
+
+    label {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        opacity: 0.5;
+        margin-bottom: 6px;
+        margin-top: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #333;
+        color: var(--off-white);
+        font-family: 'Space Mono', monospace;
+        font-size: 14px;
+        padding: 10px 0;
+        outline: none;
+        transition: border-color 0.2s;
+        -webkit-appearance: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-bottom-color: var(--off-white);
+    }
+
+    textarea {
+        min-height: 80px;
+        resize: none;
+    }
+
+    select option {
+        background: var(--black);
+        color: var(--off-white);
+    }
+
+    .radio-group { margin-top: 12px; }
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+    .radio-option input[type="radio"] {
+        width: auto;
+        border: none;
+        border-bottom: none;
+    }
+    .radio-option label {
+        margin: 0;
+        font-size: 11px;
+        opacity: 0.6;
+        text-transform: none;
+        letter-spacing: 1px;
+    }
+
+    .checkbox-group { margin-top: 12px; }
+    .checkbox-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    .checkbox-option input[type="checkbox"] {
+        width: auto;
+        border: none;
+        border-bottom: none;
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+    .checkbox-option label {
+        margin: 0;
+        font-size: 11px;
+        opacity: 0.6;
+        text-transform: none;
+        letter-spacing: 1px;
+    }
+
+    .required { color: var(--red); }
+
+    .submit-btn {
+        margin-top: 52px;
+        background: none;
+        border: 1px solid var(--off-white);
+        color: var(--off-white);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        padding: 18px 40px;
+        cursor: crosshair;
+        transition: background 0.2s, color 0.2s;
+        width: auto;
+    }
+
+    .submit-btn:hover {
+        background: var(--off-white);
+        color: var(--black);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .close {
+        position: fixed;
+        top: 30px;
+        right: 36px;
+        font-size: 13px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        cursor: crosshair;
+        opacity: 0.4;
+        background: none;
+        border: none;
+        color: var(--off-white);
+        font-family: 'Space Mono', monospace;
+        z-index: 300;
+        transition: opacity 0.2s;
+    }
+
+    .close:hover { opacity: 1; }
+
+    .success-message {
+        display: none;
+        padding-top: 60px;
+    }
+    .success-message.active { display: block; }
+    .success-message strong {
+        display: block;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 60px;
+        letter-spacing: 6px;
+        margin-bottom: 24px;
+        line-height: 1;
+    }
+    .success-message p {
+        font-size: 11px;
+        letter-spacing: 2px;
+        opacity: 0.5;
+        line-height: 2;
+    }
+
+    .error-message {
+        display: none;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: var(--red);
+        margin-top: 16px;
+        text-transform: uppercase;
+    }
+    .error-message.active { display: block; }
+
+    .hidden { display: none !important; }
+    .__cf_email__ { display: none !important; }
+
+    @media (max-width: 600px) {
         .menu {
-            position: fixed;
-            top: 25px;
-            right: 40px;
-            z-index: 100;
-            text-align: right;
+            bottom: 30px;
+            left: 24px;
         }
-        .menu button,
-        .menu a {
-            display: block;
-            margin: 15px 0;
-            font-weight: normal;
-            font-size: 42px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #fff;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            font-family: 'AngelicWar', sans-serif;
-            text-shadow: 0px 0px 20px rgba(0,0,0,1), 0px 0px 40px rgba(0,0,0,0.9);
+        .menu button, .menu a {
+            font-size: 32px;
         }
-        .menu button:hover,
-        .menu a:hover {
-            opacity: 1;
-            text-decoration: underline;
+        .modal-inner {
+            padding: 80px 24px 60px;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 200;
-            overflow-y: auto;
-            padding: 80px 20px 60px;
-        }
-        .modal.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
-        .modal-content {
-            background: #111;
-            padding: 50px 30px 60px;
-            max-width: 500px;
-            width: 100%;
-            border: 1px solid #333;
-            position: relative;
-        }
-        .modal-content.wide { max-width: 700px; }
-        .modal-content h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            letter-spacing: 6px;
-            margin: 0 0 40px;
-            font-size: clamp(26px, 7vw, 30px);
-        }
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            margin: 18px 0;
-            padding: 20px;
-            background: #000;
-            border: 1px solid #444;
-            color: #fff;
-            font-size: 18px;
-            font-family: inherit;
-        }
-        .modal-content input:focus,
-        .modal-content textarea:focus {
-            outline: none;
-            border-color: #666;
-        }
-        .modal-content textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        .modal-content button {
-            width: 100%;
-            padding: 22px;
-            margin-top: 40px;
-            background: #fff;
-            color: #000;
-            border: none;
-            font-weight: bold;
-            font-size: 18px;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: inherit;
-        }
-        .modal-content button:hover { background: #ccc; }
-        .modal-content button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .close {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            font-size: 40px;
-            cursor: pointer;
-            opacity: 0.8;
-            padding: 10px;
-            background: none;
-            border: none;
-            color: #fff;
-            line-height: 1;
-            font-weight: 300;
-            z-index: 300;
-        }
-        .close:hover { opacity: 1; }
-        .success-message {
-            display: none;
-            color: #fff;
-            font-size: 21px;
-            line-height: 1.8;
-            margin-top: 40px;
-        }
-        .success-message.active { display: block; }
-        .success-message strong {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            font-size: 30px;
-            display: block;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-        }
-        .error-message {
-            display: none;
-            color: #ff6b6b;
-            font-size: 16px;
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255,107,107,0.1);
-            border: 1px solid rgba(255,107,107,0.3);
-        }
-        .error-message.active { display: block; }
-        .form-subtitle {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-bottom: 30px;
-            line-height: 1.6;
-            text-align: center;
-        }
-        .required { color: #ff6b6b; }
-        .form-section { margin-bottom: 35px; }
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            letter-spacing: 3px;
-            font-size: 13px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            text-align: left;
-        }
-        label {
-            display: block;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            opacity: 0.8;
-            text-align: left;
-        }
-        select {
-            width: 100%;
-            margin: 18px 0;
-            padding: 20px;
-            background: #000;
-            border: 1px solid #444;
-            color: #fff;
-            font-size: 18px;
-            font-family: inherit;
-            cursor: pointer;
-        }
-        select:focus { outline: none; border-color: #666; }
-        .radio-group { margin-bottom: 25px; }
-        .radio-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            cursor: pointer;
-            text-align: left;
-        }
-        .radio-option input[type="radio"] {
-            width: auto;
-            margin: 0 12px 0 0;
-            cursor: pointer;
-        }
-        .radio-option label {
-            margin: 0;
-            cursor: pointer;
-            text-transform: none;
-            font-size: 14px;
-        }
-        .checkbox-group { margin-bottom: 30px; }
-        .checkbox-option {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            text-align: left;
-        }
-        .checkbox-option input[type="checkbox"] {
-            width: auto;
-            margin: 3px 12px 0 0;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .checkbox-option label {
-            margin: 0;
-            cursor: pointer;
-            text-transform: none;
-            font-size: 13px;
-            line-height: 1.5;
-            opacity: 0.9;
-        }
-        .hidden { display: none !important; }
-        .__cf_email__ { display: none !important; }
-        @media (max-width: 600px) {
-            .menu { top: 20px; right: 20px; }
-            .modal { padding: 80px 15px 40px; }
-            .modal-content { padding: 30px 20px 40px; }
-            .close { top: 15px; right: 15px; font-size: 32px; }
-            .checkbox-option input[type="checkbox"],
-            .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
-            .checkbox-option label,
-            .radio-option label { font-size: 12px; }
-        }
-    </style>
+        .site-label { display: none; }
+    }
+</style>
+```
+
 </head>
 <body>
 
 ```
+<span class="site-label">9NIHIL — Tattoo</span>
+<span class="year-label">© 2025</span>
+
 <nav class="menu" role="navigation" aria-label="Main menu">
     <button id="bookingBtn">Booking</button>
     <button id="waitlistBtn">Waitlist</button>
@@ -289,78 +374,75 @@
 
 <!-- Waitlist Modal -->
 <div id="waitlistModal" class="modal">
-    <button class="close" id="closeWaitlist">&times;</button>
-    <div class="modal-content wide">
-        <div id="formContainer">
-            <h2>WAITLIST INQUIRY</h2>
-            <p class="form-subtitle">Join the waitlist by providing your information below. All fields marked with <span class="required">*</span> are required.</p>
-            <div class="error-message" id="errorMsg">There was an issue submitting your form. Please try again.</div>
-            <form id="waitlistForm">
-                <div class="form-section">
-                    <div class="section-title">Personal Information</div>
+    <button class="close" id="closeWaitlist">[ close ]</button>
+    <div class="modal-inner">
+        <div class="modal-content">
+            <div id="formContainer">
+                <h2>Waitlist</h2>
+                <p class="form-subtitle">All fields marked * are required</p>
+                <div class="error-message" id="errorMsg">Submission failed — please try again</div>
+                <form id="waitlistForm">
+                    <div class="section-title">Personal</div>
                     <label for="waitlist-name">Name <span class="required">*</span></label>
                     <input type="text" id="waitlist-name" name="name" required>
                     <label for="waitlist-email">Email <span class="required">*</span></label>
                     <input type="email" id="waitlist-email" name="email" required>
-                    <label for="waitlist-instagram">Instagram Handle</label>
+                    <label for="waitlist-instagram">Instagram</label>
                     <input type="text" id="waitlist-instagram" name="instagram" placeholder="@username">
                     <label for="waitlist-location">Country / City <span class="required">*</span></label>
                     <input type="text" id="waitlist-location" name="location" required>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Project Information</div>
-                    <label for="waitlist-dates-from">Availability From</label>
+
+                    <div class="section-title">Project</div>
+                    <label for="waitlist-dates-from">Available From</label>
                     <input type="date" id="waitlist-dates-from" name="preferred_start_date">
-                    <label for="waitlist-dates-to">Availability To</label>
+                    <label for="waitlist-dates-to">Available To</label>
                     <input type="date" id="waitlist-dates-to" name="preferred_end_date">
-                    <label for="waitlist-project">Tattoo Project Idea / Size / Placement <span class="required">*</span></label>
-                    <textarea id="waitlist-project" name="project_details" placeholder="Be as precise as possible about your tattoo idea, size, and placement" required></textarea>
+                    <label for="waitlist-project">Project / Size / Placement <span class="required">*</span></label>
+                    <textarea id="waitlist-project" name="project_details" placeholder="Describe your idea, size, and placement" required></textarea>
                     <label for="waitlist-budget">Budget <span class="required">*</span></label>
-                    <input type="text" id="waitlist-budget" name="budget" placeholder="Your budget range" required>
-                </div>
-                <button type="submit">Submit Inquiry</button>
-            </form>
-        </div>
-        <div class="success-message" id="successMsg">
-            <strong>INQUIRY RECEIVED</strong>
-            Thank you for your interest in my work.<br>
-            Your submission has been sent.<br><br>
-            I will contact you when openings become available.
+                    <input type="text" id="waitlist-budget" name="budget" placeholder="Your range" required>
+
+                    <button type="submit" class="submit-btn">Submit Inquiry</button>
+                </form>
+            </div>
+            <div class="success-message" id="successMsg">
+                <strong>Received</strong>
+                <p>Thank you for your interest.<br>I will reach out when openings become available.</p>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Booking Modal -->
 <div id="bookingModal" class="modal">
-    <button class="close" id="closeBooking">&times;</button>
-    <div class="modal-content wide">
-        <div id="bookingFormContainer">
-            <h2>BOOKING REQUEST</h2>
-            <p class="form-subtitle">Please provide detailed information about your tattoo project. All fields marked with <span class="required">*</span> are required.</p>
-            <div class="error-message" id="bookingErrorMsg">There was an issue submitting your booking. Please try again.</div>
-            <form id="bookingForm">
-                <div class="form-section">
-                    <div class="section-title">Personal Information</div>
+    <button class="close" id="closeBooking">[ close ]</button>
+    <div class="modal-inner">
+        <div class="modal-content">
+            <div id="bookingFormContainer">
+                <h2>Booking</h2>
+                <p class="form-subtitle">All fields marked * are required</p>
+                <div class="error-message" id="bookingErrorMsg">Submission failed — please try again</div>
+                <form id="bookingForm">
+                    <div class="section-title">Personal</div>
                     <label for="booking-name">Name <span class="required">*</span></label>
                     <input type="text" id="booking-name" name="name" required>
                     <label for="booking-email">Email <span class="required">*</span></label>
                     <input type="email" id="booking-email" name="email" required>
-                    <label for="booking-instagram">Instagram Handle</label>
+                    <label for="booking-instagram">Instagram</label>
                     <input type="text" id="booking-instagram" name="instagram" placeholder="@username">
                     <label for="booking-location">Country / City <span class="required">*</span></label>
                     <input type="text" id="booking-location" name="location" required>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Tattoo Details</div>
-                    <label for="placement">Body Placement <span class="required">*</span></label>
-                    <input type="text" id="placement" name="placement" placeholder="e.g., forearm, back, thigh" required>
-                    <label for="size">Approximate Size <span class="required">*</span></label>
+
+                    <div class="section-title">Tattoo</div>
+                    <label for="placement">Placement <span class="required">*</span></label>
+                    <input type="text" id="placement" name="placement" placeholder="e.g. forearm, back, thigh" required>
+                    <label for="size">Size <span class="required">*</span></label>
                     <select id="size" name="size" required>
-                        <option value="">Select size</option>
-                        <option value="small">Small (5-10 cm / 2-4 inches)</option>
-                        <option value="medium">Medium (10-15 cm / 4-6 inches)</option>
-                        <option value="large">Large (15-25 cm / 6-10 inches)</option>
-                        <option value="extra-large">Extra Large (25+ cm / 10+ inches)</option>
+                        <option value="">— select —</option>
+                        <option value="small">Small (5–10 cm)</option>
+                        <option value="medium">Medium (10–15 cm)</option>
+                        <option value="large">Large (15–25 cm)</option>
+                        <option value="extra-large">Extra Large (25+ cm)</option>
                         <option value="full-sleeve">Full Arm Sleeve</option>
                         <option value="half-sleeve">Half Arm Sleeve</option>
                         <option value="full-leg-sleeve">Full Leg Sleeve</option>
@@ -368,61 +450,58 @@
                         <option value="back-piece">Back Piece</option>
                     </select>
                     <label for="description">Design Description <span class="required">*</span></label>
-                    <textarea id="description" name="description" placeholder="Describe your tattoo idea in detail." required></textarea>
+                    <textarea id="description" name="description" placeholder="Describe your idea in detail" required></textarea>
                     <label for="references">Reference Links</label>
-                    <textarea id="references" name="references" placeholder="Paste links to reference images (optional)"></textarea>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Session Details</div>
-                    <label>Is this your first tattoo? <span class="required">*</span></label>
+                    <textarea id="references" name="references" placeholder="Pinterest, Instagram, etc. (optional)"></textarea>
+
+                    <div class="section-title">Session</div>
+                    <label>First tattoo? <span class="required">*</span></label>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="first-yes" name="first_tattoo" value="yes" required>
-                            <label for="first-yes">Yes, this is my first tattoo</label>
+                            <label for="first-yes">Yes, first tattoo</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="first-no" name="first_tattoo" value="no">
                             <label for="first-no">No, I have tattoos</label>
                         </div>
                     </div>
-                    <label for="availability-from">Availability From</label>
+                    <label for="availability-from">Available From</label>
                     <input type="date" id="availability-from" name="availability_from">
-                    <label for="availability-to">Availability To</label>
+                    <label for="availability-to">Available To</label>
                     <input type="date" id="availability-to" name="availability_to">
-                    <label for="budget">Budget Range <span class="required">*</span></label>
+                    <label for="budget">Budget <span class="required">*</span></label>
                     <select id="budget" name="budget" required>
-                        <option value="">Select budget range</option>
+                        <option value="">— select —</option>
                         <option value="under-200">Under $200</option>
-                        <option value="200-500">$200 - $500</option>
-                        <option value="500-1000">$500 - $1,000</option>
-                        <option value="1000-2000">$1,000 - $2,000</option>
+                        <option value="200-500">$200 – $500</option>
+                        <option value="500-1000">$500 – $1,000</option>
+                        <option value="1000-2000">$1,000 – $2,000</option>
                         <option value="2000+">$2,000+</option>
                         <option value="open">Open to discussion</option>
                     </select>
-                </div>
-                <div class="form-section">
-                    <div class="section-title">Additional Information</div>
+
+                    <div class="section-title">Agreements</div>
                     <div class="checkbox-group">
                         <div class="checkbox-option">
                             <input type="checkbox" id="deposit-agree" name="deposit_agree" required>
-                            <label for="deposit-agree">I understand that a non-refundable deposit will be required to secure my booking. <span class="required">*</span></label>
+                            <label for="deposit-agree">I understand a non-refundable deposit is required to secure my booking <span class="required">*</span></label>
                         </div>
                         <div class="checkbox-option">
                             <input type="checkbox" id="terms-agree" name="terms_agree" required>
-                            <label for="terms-agree">I agree to follow all aftercare instructions and studio policies. <span class="required">*</span></label>
+                            <label for="terms-agree">I agree to follow aftercare instructions and studio policies <span class="required">*</span></label>
                         </div>
                     </div>
-                    <label for="additional">Additional Notes or Questions</label>
-                    <textarea id="additional" name="additional" placeholder="Any allergies, concerns, or special requests?"></textarea>
-                </div>
-                <button type="submit">Submit Booking Request</button>
-            </form>
-        </div>
-        <div class="success-message" id="bookingSuccessMsg">
-            <strong>BOOKING RECEIVED</strong>
-            Thank you for your booking request.<br>
-            I will review your submission and contact you to confirm availability.<br><br>
-            Check your email for confirmation.
+                    <label for="additional">Notes / Questions</label>
+                    <textarea id="additional" name="additional" placeholder="Allergies, concerns, special requests"></textarea>
+
+                    <button type="submit" class="submit-btn">Submit Booking</button>
+                </form>
+            </div>
+            <div class="success-message" id="bookingSuccessMsg">
+                <strong>Received</strong>
+                <p>Thank you for your booking request.<br>I will review and contact you to confirm availability.</p>
+            </div>
         </div>
     </div>
 </div>
@@ -503,9 +582,9 @@
 
         waitlistForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            var submitBtn = waitlistForm.querySelector('button[type="submit"]');
+            var submitBtn = waitlistForm.querySelector('.submit-btn');
             submitBtn.disabled = true;
-            submitBtn.textContent = "Submitting...";
+            submitBtn.textContent = "Sending...";
             errorMsg.classList.remove("active");
             var formData = new FormData(waitlistForm);
             formData.append("access_key", "5a7634ff-7f19-4de1-abcf-3f6d5dd3dbfd");
@@ -530,9 +609,9 @@
 
         bookingForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            var submitBtn = bookingForm.querySelector('button[type="submit"]');
+            var submitBtn = bookingForm.querySelector('.submit-btn');
             submitBtn.disabled = true;
-            submitBtn.textContent = "Submitting...";
+            submitBtn.textContent = "Sending...";
             bookingErrorMsg.classList.remove("active");
             var formData = new FormData(bookingForm);
             formData.append("access_key", "ca0b1b95-6701-4492-a32e-6e0aed23c31d");
@@ -551,7 +630,7 @@
                 .catch(function () { bookingErrorMsg.classList.add("active"); })
                 .finally(function () {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = "Submit Booking Request";
+                    submitBtn.textContent = "Submit Booking";
                 });
         });
 
