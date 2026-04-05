@@ -67,7 +67,17 @@
             cursor: pointer;
             padding: 0;
             font-family: 'AngelicWar', sans-serif;
-            text-shadow: 0px 0px 20px rgba(0,0,0,1), 0px 0px 40px rgba(0,0,0,0.9);
+            text-shadow:
+                -1px -1px 0 #000,
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                -2px -2px 0 #000,
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                0px 0px 20px rgba(0,0,0,1),
+                0px 0px 40px rgba(0,0,0,0.9);
         }
         .menu button:hover,
         .menu a:hover {
@@ -188,12 +198,61 @@
             .close { top: 15px; right: 15px; font-size: 32px; }
             .checkbox-option input[type="checkbox"], .radio-option input[type="radio"] { transform: scale(0.7); margin-right: 8px; }
             .checkbox-option label, .radio-option label { font-size: 12px; }
+        .logo-text {
+            position: fixed;
+            bottom: 48px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 50;
+            font-family: 'AngelicWar', sans-serif;
+            font-size: 22px;
+            letter-spacing: 4px;
+            color: #fff;
+            white-space: nowrap;
+            pointer-events: none;
+            text-shadow:
+                -1px -1px 0 #000,
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                -2px -2px 0 #000,
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                0px 0px 20px rgba(0,0,0,1),
+                0px 0px 40px rgba(0,0,0,0.9);
+        }
+        .copyright {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            transform: scaleY(0.75);
+            z-index: 50;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #fff;
+            white-space: nowrap;
+            text-shadow:
+                -1px -1px 0 #000,
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000;
+            filter: skewX(-2deg);
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
 ```
+<div class="copyright">Copyright &copy; 2026 All Rights Reserved</div>
+<div class="logo-text">9NIHIL</div>
+
 <nav class="menu" role="navigation" aria-label="Main menu">
     <button id="bookingBtn">Booking</button>
     <button id="waitlistBtn">Waitlist</button>
